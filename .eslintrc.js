@@ -38,5 +38,6 @@ module.exports = {
     'no-const-assign': 'error',
     'object-curly-spacing': ['error', 'always'],
     'no-mixed-spaces-and-tabs': 'error',
+    'react/display-name': 'off',
   },
 };

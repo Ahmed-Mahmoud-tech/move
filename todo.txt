@@ -1,0 +1,7 @@
+auto resizing 
+add video
+add link
+zoom
+keyboard
+goToPage
+fullScreen

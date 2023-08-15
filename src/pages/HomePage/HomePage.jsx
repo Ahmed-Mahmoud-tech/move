@@ -1,10 +1,10 @@
 import React from 'react';
-import Book from '../../components/Book/Book';
+import DisplayBook from '../../components/Custom/Book/DisplayBook/DisplayBook';
 
 const HomePage = () => {
   return (
     <div>
-      <Book />
+      <DisplayBook />
     </div>
   );
 };

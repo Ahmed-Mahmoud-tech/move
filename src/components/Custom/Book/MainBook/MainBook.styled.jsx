@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 export const Wrapper = styled.div`
-  position: relative;
-  .demoPage {
-    /* position: relative; */
-  }
   .videoCont {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
+    min-width: 800px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    border: 1px solid #292929;
+    box-shadow: 0 0 5px 5px #222222;
+    box-sizing: content-box;
   }
 
   /************************ */

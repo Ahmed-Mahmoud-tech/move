@@ -20,6 +20,7 @@ export const Routes = {
     path: '/',
     component: HomePage,
     roles: ['notAuth'],
+    type: 'noSidebar',
   },
   // ResetPassword: {
   //   path: '/examples/reset-password',

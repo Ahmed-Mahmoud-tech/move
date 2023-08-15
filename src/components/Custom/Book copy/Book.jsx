@@ -2,15 +2,15 @@
 
 // import React from 'react';
 // import HTMLFlipBook from 'react-pageflip';
-// import image1 from '../../assets/book/1.jpg';
-// import image2 from '../../assets/book/2.jpg';
-// import image3 from '../../assets/book/3.jpg';
-// import image4 from '../../assets/book/4.jpg';
-// import image5 from '../../assets/book/5.jpg';
-// import image6 from '../../assets/book/6.jpg';
-// import image7 from '../../assets/book/7.jpg';
-// import image8 from '../../assets/book/8.jpg';
-// import video1 from '../../assets/book/video.mp4';
+// import image1 from '../../../assets/book/1.jpg';
+// import image2 from '../../../assets/book/2.jpg';
+// import image3 from '../../../assets/book/3.jpg';
+// import image4 from '../../../assets/book/4.jpg';
+// import image5 from '../../../assets/book/5.jpg';
+// import image6 from '../../../assets/book/6.jpg';
+// import image7 from '../../../assets/book/7.jpg';
+// import image8 from '../../../assets/book/8.jpg';
+// import video1 from '../../../assets/book/video.mp4';
 // import { Wrapper } from './Book.styled';
 
 // const Page = React.forwardRef((props, ref) => {
@@ -172,15 +172,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import HTMLFlipBook, { PageFlip } from 'react-pageflip';
 import { Wrapper } from './Book.styled';
 // import './app.scss';
-import image1 from '../../assets/book/1.jpg';
-import image2 from '../../assets/book/2.jpg';
-import image3 from '../../assets/book/3.jpg';
-import image4 from '../../assets/book/4.jpg';
-import image5 from '../../assets/book/5.jpg';
-import image6 from '../../assets/book/6.jpg';
-import image7 from '../../assets/book/7.jpg';
-import image8 from '../../assets/book/8.jpg';
-import video1 from '../../assets/book/video.mp4';
+import image1 from '../../../assets/book/1.jpg';
+import image2 from '../../../assets/book/2.jpg';
+import image3 from '../../../assets/book/3.jpg';
+import image4 from '../../../assets/book/4.jpg';
+import image5 from '../../../assets/book/5.jpg';
+import image6 from '../../../assets/book/6.jpg';
+import image7 from '../../../assets/book/7.jpg';
+import image8 from '../../../assets/book/8.jpg';
+import video1 from '../../../assets/book/video.mp4';
 const PageCover = React.forwardRef((props, ref) => {
   return (
     <div className="page page-cover" ref={ref} data-density="hard">
@@ -208,8 +208,8 @@ const Page = React.forwardRef((props, ref) => {
 
 function DemoBook() {
   const [page, setPage] = useState(0);
-  const [startPage, setStartPage] = useState(21);
-  const [totalPage, setTotalPage] = useState(0);
+  const [startPage, setStartPage] = useState();
+  const [totalPage, setTotalPage] = useState();
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const flipBookRef = useRef(null);
 
@@ -218,7 +218,7 @@ function DemoBook() {
   };
 
   const prevButtonClick = () => {
-    // flipBookRef.current.getPageFlip().flipPrev();
+    flipBookRef.current.getPageFlip().flipPrev();
   };
 
   const onPage = (e) => {
@@ -226,53 +226,62 @@ function DemoBook() {
   };
 
   useEffect(() => {
-    if (flipBookRef.current) {
-      setTimeout(() => {
-        // const x = setTotalPage(flipBookRef.current.getPageFlip().getPageCount());
-        // const x = flipBookRef.current.pageFlip().pages.currentPageIndex;
-        const x = flipBookRef.current;
+    setTimeout(() => {
+      setStartPage(5);
+    }, 1000);
 
-        console.log(x, '555');
-        setScreenHeight(window.innerHeight);
-        setTimeout(() => {
-          setStartPage(5);
-        }, 3000);
-      }, 1000);
+    if (flipBookRef.current) {
+      const x = flipBookRef.current.getPageFlip();
+
+      // x.props.startPage = 5;
+      console.log(x, '555', x.getPageCount());
+
+      setTimeout(() => {
+        // x.turnToPage(5);
+        x.flip(5);
+      }, 2000);
     }
-  }, [startPage]);
+  }, []);
 
   return (
     <Wrapper>
-      <div className="rtl">
-        <HTMLFlipBook
-          width={300}
-          height={500}
-          startPage={startPage - 3}
-          // minWidth={315}
-          // maxWidth={1000}
-          // minHeight={420}
-          // maxHeight={1350}
-          // size="stretch"
-          maxShadowOpacity={0.3}
-          showCover={true}
-          mobileScrollSupport={false}
-          onFlip={onPage}
-          className="demo-book"
-          ref={flipBookRef}
-          currentPage={10}
-          flippingTime={1000}
-        >
-          <PageCover>
-            {/* <div style={{ height: '100%', width: '100%' }}></div> */}
-            <img src={image8} />
-          </PageCover>
-          {/* <Page number={1}>Lorem ipsum...</Page>
+      {startPage && (
+        <div className="rtl">
+          <HTMLFlipBook
+            width={400}
+            height={600}
+            startPage={startPage}
+            // minWidth={315}
+            // maxWidth={1000}
+            // minHeight={420}
+            // maxHeight={1350}
+            // size="stretch"
+            maxShadowOpacity={0.3}
+            showCover={true}
+            mobileScrollSupport={false}
+            onFlip={onPage}
+            className="demo-book"
+            ref={flipBookRef}
+            currentPage={10}
+            flippingTime={1000}
+            // clickEventForward={true}
+            useMouseEvents={true}
+            // swipeDistance={10}
+
+            // onChangeOrientation={this.onChangeOrientation}
+            // onChangeState={this.onChangeState}
+          >
+            <PageCover>
+              {/* <div style={{ height: '100%', width: '100%' }}></div> */}
+              <img src={image8} />
+            </PageCover>
+            {/* <Page number={1}>Lorem ipsum...</Page>
           <Page number={2}>Lorem ipsum...</Page> */}
 
-          <Page>
-            <img src={image8} />
-          </Page>
-          {/* 
+            <Page>
+              <img src={image8} />
+            </Page>
+            {/* 
           <Page>
             <div style={{ height: '100%', width: '100%' }}></div>
           </Page>
@@ -283,91 +292,92 @@ function DemoBook() {
             <div style={{ height: '100%', width: '100%' }}></div>
           </Page> */}
 
-          <Page>
-            <img src={image3} />
-          </Page>
+            <Page>
+              <img src={image3} />
+            </Page>
 
-          <Page>
-            <img src={image4} />
-          </Page>
+            <Page>
+              <img src={image4} />
+            </Page>
 
-          <Page>
-            <img src={image5} />
-          </Page>
-          <Page>
-            <img src={image2} />
-            <div className="videoCont">
-              <a href="https://google.com/" target="_blank" rel="noreferrer">
-                click here
-              </a>
-              <video width="200" height="100" controls>
-                <source src={video1} type="video/mp4"></source>
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </Page>
-          <Page>
-            <img src={image6} />
-          </Page>
+            <Page>
+              <img src={image5} />
+            </Page>
+            <Page>
+              <img src={image2} />
+              <div className="videoCont">
+                <a href="https://google.com/" target="_blank" rel="noreferrer">
+                  click here
+                </a>
+                <video width="200" height="100" controls>
+                  <source src={video1} type="video/mp4"></source>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </Page>
+            <Page>
+              <img src={image6} />
+            </Page>
 
-          <Page>
-            <img src={image7} />
-          </Page>
+            <Page>
+              <img src={image7} />
+            </Page>
 
-          <Page>
-            <img src={image8} />
-          </Page>
-          <Page>
-            <img src={image3} />
-          </Page>
+            <Page>
+              <img src={image8} />
+            </Page>
+            <Page>
+              <img src={image3} />
+            </Page>
 
-          <Page>
-            <img src={image4} />
-          </Page>
+            <Page>
+              <img src={image4} />
+            </Page>
 
-          <Page>
-            <img src={image5} />
-          </Page>
+            <Page>
+              <img src={image5} />
+            </Page>
 
-          <Page>
-            <img src={image6} />
-          </Page>
+            <Page>
+              <img src={image6} />
+            </Page>
 
-          <Page>
-            <img src={image7} />
-          </Page>
+            <Page>
+              <img src={image7} />
+            </Page>
 
-          <Page>
-            <img src={image8} />
-          </Page>
-          <Page>
-            <img src={image3} />
-          </Page>
+            <Page>
+              <img src={image8} />
+            </Page>
+            <Page>
+              <img src={image3} />
+            </Page>
 
-          <Page>
-            <img src={image4} />
-          </Page>
+            <Page>
+              <img src={image4} />
+            </Page>
 
-          <Page>
-            <img src={image5} />
-          </Page>
+            <Page>
+              <img src={image5} />
+            </Page>
 
-          <Page>
-            <img src={image6} />
-          </Page>
+            <Page>
+              <img src={image6} />
+            </Page>
 
-          <Page>
-            <img src={image7} />
-          </Page>
+            <Page>
+              <img src={image7} />
+            </Page>
 
-          <Page>
-            <img src={image8} />
-          </Page>
-          <PageCover>
-            <img src={image5} />
-          </PageCover>
-        </HTMLFlipBook>
-      </div>
+            <Page>
+              <img src={image8} />
+            </Page>
+            <PageCover>
+              <img src={image5} />
+            </PageCover>
+          </HTMLFlipBook>
+        </div>
+      )}
     </Wrapper>
   );
 }
