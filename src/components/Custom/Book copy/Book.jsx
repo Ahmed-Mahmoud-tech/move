@@ -234,7 +234,6 @@ function DemoBook() {
       const x = flipBookRef.current.getPageFlip();
 
       // x.props.startPage = 5;
-      console.log(x, '555', x.getPageCount());
 
       setTimeout(() => {
         // x.turnToPage(5);

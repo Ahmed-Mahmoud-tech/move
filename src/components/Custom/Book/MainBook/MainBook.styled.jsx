@@ -1,5 +1,22 @@
 import styled from 'styled-components';
 export const Wrapper = styled.div`
+  .tools {
+    position: fixed;
+    top: 0;
+    z-index: 100000;
+    button {
+      width: 30px;
+      color: #fff;
+      background-color: #29292980;
+      font-size: var(--normalFont);
+      margin: 3px;
+      border-radius: 5px;
+      padding: 5px;
+      border-color: gray white white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
   .videoCont {
     position: absolute;
     min-width: 800px;
@@ -74,11 +91,12 @@ export const Wrapper = styled.div`
       // for left page (property will be added automatically)
       border-right: 0;
       /* box-shadow: inset -7px 0 50px -7px red; */
-      box-shadow: inset -7px 0 50px -7px rgba(0, 0, 0, 0.3);
+      box-shadow: inset -7px 0 50px -7px
+        rgba(0, 0, 0, ${(props) => props.bookShadow});
       position: absolute;
       height: 100%;
       width: 100%;
-      z-index: 1;
+      z-index: ${(props) => props.shadowIndex};
 
       &:after {
         content: '';
@@ -86,27 +104,27 @@ export const Wrapper = styled.div`
         height: 100%;
         position: absolute;
         right: 0;
-        /* background: rgba(0, 0, 0, 0.1); */
-        box-shadow: 0px 0 50px 10px rgba(0, 0, 0, 0.6);
+        box-shadow: 0px 0 50px 10px
+          rgba(0, 0, 0, ${(props) => props.bookShadow});
       }
     }
 
     &.--right .shadow {
       // for right page (property will be added automatically)
       border-left: 0;
-      box-shadow: inset 7px 0 30px -7px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 7px 0 30px -7px rgba(0, 0, 0, ${(props) => props.bookShadow});
       position: absolute;
       height: 100%;
       width: 100%;
-      z-index: 1;
+      z-index: ${(props) => props.shadowIndex};
       &:after {
         content: '';
         width: 0px;
         height: 100%;
         position: absolute;
         left: 0;
-        /* background: rgba(0, 0, 0, 0.1); */
-        box-shadow: 0px 0 50px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 0 50px 10px
+          rgba(0, 0, 0, ${(props) => props.bookShadow});
       }
       &:before {
         content: '';
@@ -114,9 +132,8 @@ export const Wrapper = styled.div`
         height: 100%;
         position: absolute;
         left: 15%;
-
-        /* background: rgba(0, 0, 0, 0.1); */
-        box-shadow: 0px 0 50px 10px rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0 50px 10px
+          rgba(255, 255, 255, ${(props) => props.bookShadow});
       }
     }
 
@@ -124,29 +141,6 @@ export const Wrapper = styled.div`
       // for hard page
       background-color: hsl(35, 50, 90);
       border: solid 1px hsl(35, 20, 50);
-    }
-
-    &.page-cover {
-      background-color: hsl(35, 45, 80);
-      color: hsl(35, 35, 35);
-      border: solid 1px hsl(35, 20, 50);
-      h2 {
-        text-align: center;
-        padding-top: 50%;
-        font-size: 210%;
-      }
-
-      &.page-cover-top {
-        box-shadow:
-          inset 0px 0 30px 0px rgba(36, 10, 3, 0.3),
-          -2px 0 5px 2px rgba(0, 0, 0, 0.4);
-      }
-
-      &.page-cover-bottom {
-        box-shadow:
-          inset 0px 0 30px 0px rgba(36, 10, 3, 0.3),
-          10px 0 8px 0px rgba(0, 0, 0, 0.4);
-      }
     }
   }
 `;

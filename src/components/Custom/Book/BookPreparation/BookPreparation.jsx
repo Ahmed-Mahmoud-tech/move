@@ -1,16 +1,172 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainBook from '../MainBook/MainBook';
 import { Wrapper } from './BookPreparation.styled';
 
-const BookPreparation = () => {
-  //! if showCover false in rtl the last page it will opened and the first be cover
-  const showCover = true;
-  const rtl = true;
-  const width = 400;
-  const doubleWidth = width * 2;
-  const height = 600;
-  const flippingTime = 1000;
-  let pagesLength = 12;
+let isFirstLoad = 0;
+let zoomModeVar = false;
+let useMouseEventsVar = true;
+let shadowIndexVar = 1;
+
+// ---------- const will not change
+//! if showCover false in rtl the last page it will opened and the first be cover
+let showCover = true;
+
+const BookPreparation = ({
+  // ---------- come from parent one time
+  pagesLength,
+  rtl,
+  BookHeight,
+  BookWidth,
+  // ---------- come from parent more than one time
+  zoom,
+  full,
+  bookShadow,
+  flippingTime,
+  autoFlip,
+  setAutoFlip,
+  pageNumGO,
+  autoFlipTime,
+  reload,
+}) => {
+  const [updatedComp, setUpdatedComp] = useState();
+  const [startPage, setStartPage] = useState(0);
+  const [pageNumGOState, setPageNumGOState] = useState(0);
+
+  const changeStartPage = (x) => {
+    setStartPage(x);
+  };
+
+  // const [isFullscreen, setIsFullscreen] = useState(full);
+
+  const toggleFullscreen = () => {
+    if (full) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+    runReload();
+  };
+
+  const toggleZoom = (value) => {
+    // setZoomMode(value);
+    zoomModeVar = value;
+    useMouseEventsVar = !value;
+    shadowIndexVar = value ? 0 : 1;
+    runReload();
+  };
+
+  const runReload = (goToPageNum) => {
+    let startPageRender;
+    if ((startPage == pagesLength - 1 || startPage == 0) && isFirstLoad == 0) {
+      startPageRender = rtl ? pagesLength - 1 : 0;
+      setStartPage(startPageRender);
+    } else {
+      if (goToPageNum >= 0 && goToPageNum < pagesLength) {
+        console.log(
+          2,
+          'goToPageNum=> ',
+          goToPageNum,
+          'startPage=> ',
+          startPage,
+          '**********77'
+        );
+        startPageRender = rtl ? pagesLength - 1 - goToPageNum : goToPageNum;
+        setStartPage(startPageRender);
+      } else {
+        console.log(3, goToPageNum, startPage, '**********88');
+
+        startPageRender = startPage;
+        // if (goToPageNum == undefined) {
+        //   startPageRender = rtl ? pagesLength - 1 - startPage : startPage;
+        // } else {
+        //   // startPageRender = startPage;
+        //   startPageRender = rtl ? pagesLength - 1 - startPage : startPage;
+        // }
+      }
+    }
+    console.log('********startPageRender=> ', startPageRender);
+    setTimeout(() => {
+      setUpdatedComp(<></>);
+      setUpdatedComp(
+        <MainBook
+          images={images}
+          width={BookWidth / 2}
+          height={BookHeight}
+          flippingTime={flippingTime}
+          startPage={startPageRender}
+          showCover={showCover}
+          useMouseEvents={useMouseEventsVar}
+          shadowIndex={shadowIndexVar}
+          zoomMode={zoomModeVar}
+          changeStartPage={changeStartPage}
+          bookShadow={bookShadow}
+          rtl={rtl}
+          autoFlip={autoFlip}
+          setAutoFlip={setAutoFlip}
+          pagesLength={pagesLength}
+          autoFlipTime={autoFlipTime}
+        />
+      );
+    }, 100);
+    isFirstLoad++;
+  };
+
+  useEffect(() => {
+    if (isFirstLoad != 0) toggleZoom(zoom);
+  }, [zoom]);
+  useEffect(() => {
+    if (isFirstLoad != 0) toggleFullscreen();
+  }, [full]);
+  useEffect(() => {
+    // if (autoFlip) {
+    //   if (pageNumGO != pageNumGOState) {
+    //     runReload(pageNumGO - 1);
+    //     setPageNumGOState(pageNumGO);
+    //     pageNumGO = null;
+    //   } else {
+    //     if (rtl) {
+    //       runReload(pagesLength - startPage - 1);
+    //     } else {
+    //       runReload(startPage);
+    //     }
+    //   }
+    // } else {
+    console.log('startPage=> ', startPage, '**********************--');
+    runReload();
+    // }
+  }, [rtl, flippingTime, autoFlip, reload, bookShadow]);
+
+  useEffect(() => {
+    const realNum = parseInt(pageNumGO) - 1;
+    console.log(
+      'startPage==> ',
+      startPage,
+      '**********************1',
+      'realNum=> ',
+      realNum
+    );
+    if (realNum >= 0 && realNum < pagesLength) {
+      // setStartPage(realNum);
+      runReload(realNum);
+    }
+  }, [pageNumGO]);
+  //*** import images
   const importAll = (r) => {
     let images = {};
     r.keys().forEach((item, index) => {
@@ -23,17 +179,7 @@ const BookPreparation = () => {
     require.context('../../../../assets/book', false, /\.(png|jpe?g|svg)$/)
   );
 
-  let fHeight;
-  let fWidth;
-  if (height / doubleWidth >= window.innerHeight / window.innerWidth) {
-    fHeight = Math.ceil(window.innerHeight * 0.9);
-    fWidth = Math.ceil((fHeight * doubleWidth) / height);
-    console.log('case1', fHeight, fWidth);
-  } else {
-    fWidth = Math.ceil(window.innerWidth * 0.9);
-    fHeight = Math.ceil((fWidth * height) / doubleWidth);
-    console.log('case2', fHeight, fWidth);
-  }
+  //**** add rtl
 
   if (rtl) {
     const entries = Object.entries(images);
@@ -41,7 +187,8 @@ const BookPreparation = () => {
     const reversedObject = Object.fromEntries(reversedEntries);
     images = reversedObject;
   }
-  //   if odd add more image
+
+  //***   if odd add more image
   if (
     (Object.keys(images).length % 2 != 0 && showCover) ||
     (Object.keys(images).length % 2 == 0 && !showCover)
@@ -58,15 +205,8 @@ const BookPreparation = () => {
   }
 
   return (
-    <Wrapper minWidth={fWidth + 'px'}>
-      <MainBook
-        images={images}
-        width={fWidth / 2}
-        height={fHeight}
-        flippingTime={flippingTime}
-        startPage={rtl ? pagesLength - 1 : 0}
-        showCover={showCover}
-      />
+    <Wrapper Width={BookWidth + 'px'}>
+      <div className="book">{updatedComp}</div>
     </Wrapper>
   );
 };

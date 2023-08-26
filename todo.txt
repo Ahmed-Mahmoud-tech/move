@@ -1,7 +1,37 @@
-auto resizing 
-add video
-add link
-zoom
-keyboard
-goToPage
-fullScreen
+display phase
+
+//** sidebar
+//** fullScreen
+//** auto resize
+//** zoom
+//** keyboard navigation
+//** auto flip
+//** go to page
+//** change background
+//** able go to index
+//** background
+//** flip speed 
+//** shadow
+
+-----------------------------
+
+creation phase 
+
+pdf
+rtl ltr
+add index
+
+-----------------------------
+
+import & export 
+
+export zip file
+export as video
+import zip file
+
+-----------------------------
+
+coming soon 
+
+add video     == wait
+add link      == wait

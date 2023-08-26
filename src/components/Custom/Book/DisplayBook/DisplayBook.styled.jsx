@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 export const Wrapper = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
+  color: white;
+  min-height: 100%;
+  min-width: 100%;
   position: relative;
-  background-color: #000;
+  background-color: ${(props) => props.bg};
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  .divRef {
+    position: relative;
+  }
 `;
