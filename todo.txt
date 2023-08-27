@@ -20,7 +20,7 @@ creation phase
 pdf
 rtl ltr
 add index
-
+save setting config
 -----------------------------
 
 import & export 

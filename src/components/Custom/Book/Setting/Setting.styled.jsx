@@ -29,6 +29,7 @@ export const Wrapper = styled.div`
     color: var(--mainColor);
     text-transform: capitalize;
     font-family: fantasy;
+    user-select: none;
   }
 
   .menuItem {
@@ -36,11 +37,21 @@ export const Wrapper = styled.div`
     display: flex;
     align-items: center;
   }
+  .index {
+    .title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: var(--bigFont);
+    }
 
-  .title {
-    text-align: center;
-    margin-bottom: 0.5rem;
-    font-size: var(--bigFont);
+    ul {
+      max-width: 300px;
+      overflow: auto;
+
+      li {
+        white-space: nowrap;
+      }
+    }
   }
 
   .icon {
@@ -52,8 +63,7 @@ export const Wrapper = styled.div`
   }
 
   .menuItemInput {
-    padding: 0 0.5rem;
-    margin: 0.5rem 0;
+    padding: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: end;
@@ -61,11 +71,17 @@ export const Wrapper = styled.div`
     label {
       margin-bottom: 2px;
       display: block;
+      margin-right: 1rem;
     }
 
     input {
       width: 100%;
       max-width: 50px;
+    }
+
+    input {
+      text-align: center;
+      border-radius: 5px;
     }
   }
   li.indexItem {

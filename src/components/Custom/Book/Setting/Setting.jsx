@@ -163,7 +163,12 @@ const Setting = ({
               {pages.map((page, i) => (
                 <li
                   key={i}
-                  onClick={() => setPageNumGO(page.num)}
+                  onClick={() => {
+                    setPageNumGO(page.num);
+                    setTimeout(() => {
+                      setPageNumGO('');
+                    }, 1000);
+                  }}
                   className="indexItem"
                 >
                   {page.title}
