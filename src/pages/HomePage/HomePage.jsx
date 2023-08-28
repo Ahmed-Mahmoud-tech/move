@@ -1,10 +1,10 @@
 import React from 'react';
-import DisplayBook from '../../components/Custom/Book/DisplayBook/DisplayBook';
+import Welcome from '../../components/Custom/Welcome/Welcome';
 
 const HomePage = () => {
   return (
     <>
-      <DisplayBook />
+      <Welcome />
     </>
   );
 };

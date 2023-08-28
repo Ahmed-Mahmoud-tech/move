@@ -5,6 +5,8 @@ const GlobalStyles = createGlobalStyle`
 :root{
     --hugFont:3rem;
     --bigFont:1.5rem;
+    --whiteColor:#fff;
+    --blackColor:#000;
     --mainColor: purple;
     --secondColor: green;
     --thirdColor: orange;

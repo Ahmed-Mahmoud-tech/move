@@ -7,6 +7,7 @@
 // import Navs from './pages/components/Navs'
 // import NotFoundPage from './pages/examples/NotFound'
 import Redirect from './components/Global/Redirect/Redirect';
+import Display from './pages/Display/Display';
 import HomePage from './pages/HomePage/HomePage';
 import Singin from './pages/Singin/Singin';
 export const Routes = {
@@ -19,6 +20,12 @@ export const Routes = {
   Homepage: {
     path: '/',
     component: HomePage,
+    roles: ['notAuth'],
+    type: 'noSidebar',
+  },
+  display: {
+    path: '/display',
+    component: Display,
     roles: ['notAuth'],
     type: 'noSidebar',
   },
