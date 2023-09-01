@@ -28,6 +28,9 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
+
+    const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+    Menu.setApplicationMenu(mainMenu);
   });
 });
 
@@ -36,6 +39,12 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+const mainMenuTemplate = [
+  {
+    label: 'File00',
+  },
+];
 
 // const { app, BrowserWindow } = require('electron');
 
