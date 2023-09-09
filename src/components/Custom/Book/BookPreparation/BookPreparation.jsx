@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainBook from '../MainBook/MainBook';
 import { Wrapper } from './BookPreparation.styled';
-
 let isFirstLoad = 0;
 let zoomModeVar = false;
 let useMouseEventsVar = true;
@@ -27,6 +26,7 @@ const BookPreparation = ({
   pageNumGO,
   autoFlipTime,
   reload,
+  directory,
 }) => {
   const [updatedComp, setUpdatedComp] = useState();
   const [startPage, setStartPage] = useState(0);
@@ -175,8 +175,9 @@ const BookPreparation = ({
     return images;
   };
 
+  console.log('************************************', directory);
   let images = importAll(
-    require.context('../../../../assets/book', false, /\.(png|jpe?g|svg)$/)
+    require.context(directory, false, /\.(png|jpe?g|svg)$/)
   );
 
   //**** add rtl

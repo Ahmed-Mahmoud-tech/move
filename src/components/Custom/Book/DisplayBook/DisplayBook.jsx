@@ -4,12 +4,21 @@ import BookPreparation from '../BookPreparation/BookPreparation';
 import Setting from '../Setting/Setting';
 
 const DisplayBook = ({ width = 400, height = 600 }) => {
+  const presentationData = JSON.parse(
+    localStorage.getItem('currentPresentation')
+  );
+  const beforePublicFolder = '../../../../../public/';
+
+  const directory =
+    beforePublicFolder +
+    presentationData.directory.split('public\\')[1].replace(/\\/g, '/');
+
+  const rtl = presentationData.direction;
   const doubleWidth = width * 2;
   const [fHeight, setFHeight] = useState(0);
   const [fWidth, setFWidth] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [full, setFull] = useState(false);
-  const [rtl, setRtl] = useState(true);
   const [bookShadow, setBookShadow] = useState(50);
   const [flippingTime, setFlippingTime] = useState(0.9);
   const [pageNumGO, setPageNumGO] = useState();
@@ -83,6 +92,7 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
               setAutoFlip={setAutoFlip}
               pageNumGO={pageNumGO}
               reload={reload}
+              directory={directory}
             />
           )}
         </div>
