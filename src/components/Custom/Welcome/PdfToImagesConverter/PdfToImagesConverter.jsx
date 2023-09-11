@@ -1,8 +1,9 @@
 /* eslint-disable indent */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+const { v4: uuidv4 } = require('uuid');
 
 function FileInputExample() {
   const navigate = useNavigate();
@@ -28,21 +29,25 @@ function FileInputExample() {
       const filePath = values.file.path;
       const fileName = values.file.name;
 
+      const presentationId = uuidv4();
       const data = {
         name: values.name,
         direction: values.direction,
         file: { filePath, fileName },
+        presentationId,
       };
 
-      const response = await window.versions.createPresentation(data);
-      if (response) {
-        console.log(response, '****************--');
-        const jsonString = JSON.stringify(response);
-        localStorage.setItem('currentPresentation', jsonString);
-        navigate('/display');
-      }
+      const jsonString = JSON.stringify(data);
+      localStorage.setItem('currentPresentation', jsonString);
+      navigate(`/display/${presentationId}`);
+      // const response = await window.versions.createPresentation(data);
+      // }
     },
   });
+
+  // useEffect(() => {
+  //   console.log({ data });
+  // }, [data]);
 
   const FileInput = ({ field, form }) => {
     return (

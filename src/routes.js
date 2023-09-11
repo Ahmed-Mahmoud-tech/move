@@ -24,7 +24,7 @@ export const Routes = {
     type: 'noSidebar',
   },
   display: {
-    path: '/display',
+    path: '/display/:id',
     component: Display,
     roles: ['notAuth'],
     type: 'noSidebar',

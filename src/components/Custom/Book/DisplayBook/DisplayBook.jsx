@@ -2,18 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Wrapper } from './DisplayBook.styled';
 import BookPreparation from '../BookPreparation/BookPreparation';
 import Setting from '../Setting/Setting';
+import { useParams } from 'react-router-dom';
 
 const DisplayBook = ({ width = 400, height = 600 }) => {
-  const presentationData = JSON.parse(
-    localStorage.getItem('currentPresentation')
-  );
-  const beforePublicFolder = '../../../../../public/';
-
-  const directory =
-    beforePublicFolder +
-    presentationData.directory.split('public\\')[1].replace(/\\/g, '/');
-
-  const rtl = presentationData.direction;
+  const params = useParams();
+  const [presentationInfo, setPresentationInfo] = useState();
+  const presentationId = params.id;
   const doubleWidth = width * 2;
   const [fHeight, setFHeight] = useState(0);
   const [fWidth, setFWidth] = useState(0);
@@ -30,6 +24,7 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
   const divRef = useRef();
   const handleResize = () => {
     const divElement = divRef.current;
+
     if (
       divElement &&
       height / doubleWidth >= divElement.clientHeight / divElement.clientWidth
@@ -44,6 +39,7 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
         Math.ceil((divElement.clientWidth * 0.9 * height) / doubleWidth)
       );
     }
+    // }
   };
   useEffect(() => {
     // you can change any settings
@@ -73,13 +69,42 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
       title: 'page12',
     },
   ];
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(process.env.PUBLIC_URL + '/db.json');
+
+      const currentPresentation = await response.json();
+
+      if (!currentPresentation.presentations[presentationId]) {
+        const presentationRequestData = JSON.parse(
+          localStorage.getItem('currentPresentation')
+        );
+        const response = await window.versions.createPresentation(
+          presentationRequestData
+        );
+      } else {
+        setPresentationInfo({
+          ...currentPresentation.presentations[presentationId],
+          directory:
+            process.env.PUBLIC_URL +
+            '/presentationsDirectory/' +
+            presentationId +
+            '/outputImages',
+        });
+      }
+    })();
+  }, []);
+
   return (
     <>
+      {/* {presentationInfo && ( */}
       <Wrapper bg={bgColor}>
+        {console.log({ presentationInfo })}
         <div className="divRef" ref={divRef}>
-          {fHeight > 0 && (
+          {fHeight > 0 && presentationInfo?.directory && (
             <BookPreparation
-              rtl={rtl}
+              rtl={presentationInfo?.direction == 'rtl'}
               BookWidth={fWidth}
               BookHeight={fHeight}
               full={full}
@@ -92,11 +117,10 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
               setAutoFlip={setAutoFlip}
               pageNumGO={pageNumGO}
               reload={reload}
-              directory={directory}
+              directory={presentationInfo?.directory}
             />
           )}
         </div>
-
         <Setting
           setFull={setFull}
           full={full}
@@ -121,6 +145,7 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
           handleResize={handleResize}
         />
       </Wrapper>
+      {/* )} */}
     </>
   );
 };

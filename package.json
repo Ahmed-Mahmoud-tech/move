@@ -35,7 +35,8 @@
     "web-vitals": "^2.1.4",
     "yup": "^1.2.0"
   },
-  "main": "public/main.js",
+  "mainOLD": "public/main.js",
+  "main": "public/electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
