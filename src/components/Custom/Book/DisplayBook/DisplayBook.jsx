@@ -4,11 +4,12 @@ import BookPreparation from '../BookPreparation/BookPreparation';
 import Setting from '../Setting/Setting';
 import { useParams } from 'react-router-dom';
 
-const DisplayBook = ({ width = 400, height = 600 }) => {
+const DisplayBook = () => {
   const params = useParams();
   const [presentationInfo, setPresentationInfo] = useState();
   const presentationId = params.id;
-  const doubleWidth = width * 2;
+  const [width, setWidth] = useState(1);
+  const [height, setHeight] = useState(2);
   const [fHeight, setFHeight] = useState(0);
   const [fWidth, setFWidth] = useState(0);
   const [zoom, setZoom] = useState(false);
@@ -23,6 +24,8 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
   const [autoFlipTime, setAutoFlipTime] = useState(1); //per second
   const divRef = useRef();
   const handleResize = () => {
+    const doubleWidth = width * 2;
+
     const divElement = divRef.current;
 
     if (
@@ -39,17 +42,21 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
         Math.ceil((divElement.clientWidth * 0.9 * height) / doubleWidth)
       );
     }
+
+    console.log({ width });
+    console.log({ height });
+
     // }
   };
-  useEffect(() => {
-    // you can change any settings
-    //***  auto resize
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  // useEffect(() => {
+  //   // you can change any settings
+  //   //***  auto resize
+  //   handleResize();
+  //   window.addEventListener('resize', handleResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
 
   const pages = [
     {
@@ -93,7 +100,20 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
             '/outputImages',
         });
       }
+      setWidth(currentPresentation.presentations[presentationId].width);
+      setHeight(currentPresentation.presentations[presentationId].height);
+      console.log(
+        currentPresentation.presentations[presentationId].height,
+        currentPresentation.presentations[presentationId].width,
+        '************************'
+      );
     })();
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
@@ -118,6 +138,7 @@ const DisplayBook = ({ width = 400, height = 600 }) => {
               pageNumGO={pageNumGO}
               reload={reload}
               directory={presentationInfo?.directory}
+              pagesCount={presentationInfo?.pagesCount}
             />
           )}
         </div>

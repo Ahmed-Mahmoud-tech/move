@@ -1,4 +1,6 @@
-// start with BookPreparation line 182
+// start with BookPreparation line 160 (dynamic iamges)
+check rtl
+we have issue in autoFlip in ltr
 
 display phase
 

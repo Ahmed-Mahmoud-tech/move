@@ -26,9 +26,14 @@ exports.pdfToImages = async (pdfFilePath, presentationId) => {
   pdfPoppler
     .convert(pdfFilePath, opts)
     .then((result) => {
-      console.log('PDF converted to images:', result);
+      console.log('PDF converted to images:', result.pages.length);
     })
     .catch((error) => {
       console.error('Error converting PDF to images:', error);
     });
+
+  return pdfPoppler.info(pdfFilePath).then((pdfInfo) => {
+    // console.log(pdfInfo, '0000000');
+    return pdfInfo;
+  });
 };

@@ -52,7 +52,7 @@ app.whenReady().then(() => {
         }
       );
 
-      await pdfToImages(
+      const pdfInfo = await pdfToImages(
         `${destinationFolder}/${file.fileName}`,
         presentationId
       );
@@ -68,6 +68,9 @@ app.whenReady().then(() => {
         name,
         direction,
         id: presentationId,
+        pagesCount: pdfInfo.pages,
+        width: pdfInfo.width_in_pts,
+        height: pdfInfo.height_in_pts,
         directory: `${destinationFolder}/outputImages`,
       };
       data.presentations[presentationId] = newData;
@@ -77,22 +80,22 @@ app.whenReady().then(() => {
       );
       // // event.sender.send('action-from-main', 'Action data from main process');
       return await new Promise((resolve) => {
-        setTimeout(() => {
-          console.log('***********************************9');
-          resolve(newData);
-        }, 2000);
+        // setTimeout(() => {
+        resolve(newData);
+        // }, 2000);
       });
     }
   );
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
+  // app.on('activate', () => {
+  //   console.log('.....................................');
+  //   if (BrowserWindow.getAllWindows().length === 0) {
+  //     createWindow();
+  //   }
 
-    const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-    Menu.setApplicationMenu(mainMenu);
-  });
+  //   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  //   Menu.setApplicationMenu(mainMenu);
+  // });
 });
 
 app.on('window-all-closed', () => {
@@ -101,8 +104,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-const mainMenuTemplate = [
-  {
-    label: 'File00',
-  },
-];
+// const mainMenuTemplate = [
+//   {
+//     label: 'File00',
+//   },
+// ];

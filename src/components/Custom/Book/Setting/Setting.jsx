@@ -12,6 +12,7 @@ import {
 } from 'react-icons/bs';
 
 import { TbLayersOff, TbLayersSubtract } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
 
 const Setting = ({
   setFull,
@@ -175,6 +176,9 @@ const Setting = ({
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="createPresentation">
+            <Link to="/">Create Presentation</Link>
           </div>
         </div>
       </div>

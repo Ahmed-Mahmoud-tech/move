@@ -17,6 +17,8 @@ const BookPreparation = ({
   rtl,
   BookHeight,
   BookWidth,
+  directory,
+  pagesCount,
   // ---------- come from parent more than one time
   zoom,
   full,
@@ -27,7 +29,6 @@ const BookPreparation = ({
   pageNumGO,
   autoFlipTime,
   reload,
-  directory,
 }) => {
   const [updatedComp, setUpdatedComp] = useState();
   const [startPage, setStartPage] = useState(0);
@@ -40,6 +41,10 @@ const BookPreparation = ({
 
   //// const [isFullscreen, setIsFullscreen] = useState(full);
 
+  const setImagesState = (object) => {
+    setImages(object);
+    constImages = object;
+  };
   const toggleFullscreen = () => {
     if (full) {
       if (document.documentElement.requestFullscreen) {
@@ -115,7 +120,6 @@ const BookPreparation = ({
             autoFlipTime={autoFlipTime}
           />
         )
-        // <>9ss99{console.log(images, 'first')}</>
       );
     }, 100);
     isFirstLoad++;
@@ -142,52 +146,46 @@ const BookPreparation = ({
     //     //   }
     //     // } else {
 
-    console.log('startPage=> ', startPage, '**********************--');
     runReload();
     //// }
   }, [rtl, flippingTime, autoFlip, reload, bookShadow]);
 
   useEffect(() => {
     const realNum = parseInt(pageNumGO) - 1;
-    console.log(
-      'startPage==> ',
-      startPage,
-      '**********************1',
-      'realNum=> ',
-      realNum
-    );
+
     if (realNum >= 0 && realNum < pagesLength) {
       //// setStartPage(realNum);
       runReload(realNum);
     }
   }, [pageNumGO]);
 
+  function generatePageName(pageNumber, totalDigits) {
+    // Ensure the pageNumber is within the valid range
+    if (pageNumber < 1 || pageNumber > Math.pow(10, totalDigits) - 1) {
+      throw new Error('Page number is out of range.');
+    }
+
+    // Convert the pageNumber to a string
+    let pageName = pageNumber.toString();
+
+    // Calculate the number of leading zeros needed
+    const leadingZeros = totalDigits - pageName.length;
+
+    // Add the leading zeros to the pageName
+    if (leadingZeros > 0) {
+      pageName = '0'.repeat(leadingZeros) + pageName;
+    }
+    return 'page-' + pageName + '.png';
+  }
+
   useEffect(() => {
-    setImages({
-      'page-01.png': `${directory}/page-01.png`,
-      'page-02.png': `${directory}/page-02.png`,
-      'page-03.png': `${directory}/page-03.png`,
-      'page-04.png': `${directory}/page-04.png`,
-      'page-05.png': `${directory}/page-05.png`,
-      'page-06.png': `${directory}/page-06.png`,
-      'page-07.png': `${directory}/page-07.png`,
-      'page-08.png': `${directory}/page-08.png`,
-      'page-09.png': `${directory}/page-09.png`,
-      'page-10.png': `${directory}/page-10.png`,
-    });
-    constImages = {
-      'page-01.png': `${directory}/page-01.png`,
-      'page-02.png': `${directory}/page-02.png`,
-      'page-03.png': `${directory}/page-03.png`,
-      'page-04.png': `${directory}/page-04.png`,
-      'page-05.png': `${directory}/page-05.png`,
-      'page-06.png': `${directory}/page-06.png`,
-      'page-07.png': `${directory}/page-07.png`,
-      'page-08.png': `${directory}/page-08.png`,
-      'page-09.png': `${directory}/page-09.png`,
-      'page-10.png': `${directory}/page-10.png`,
-    };
-    runReload();
+    const theImages = {};
+    const totalDigits = pagesCount.length;
+    for (let index = 1; index <= pagesCount; index++) {
+      let pageNewName = generatePageName(index, totalDigits);
+      theImages[pageNewName] = `${directory}/${pageNewName}`;
+    }
+    setImagesState(theImages);
   }, []);
 
   //**** add rtl
@@ -196,7 +194,7 @@ const BookPreparation = ({
     const entries = Object.entries(images);
     const reversedEntries = entries.reverse();
     const reversedObject = Object.fromEntries(reversedEntries);
-    setImages(reversedObject);
+    setImagesState(reversedObject);
   }
 
   //***   if odd add more image
@@ -206,7 +204,7 @@ const BookPreparation = ({
   ) {
     pagesLength++;
     if (rtl) {
-      setImages({
+      setImagesState({
         more: images[Object.keys(images)[0]],
         ...images,
       });
@@ -217,7 +215,6 @@ const BookPreparation = ({
 
   return (
     <>
-      {console.log(images, '000000000000000000')}
       <Wrapper Width={BookWidth + 'px'}>
         {Object.keys(constImages).length != 0 && (
           <div className="book">{updatedComp}</div>
