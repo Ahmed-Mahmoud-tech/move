@@ -8,8 +8,8 @@ const DisplayBook = () => {
   const params = useParams();
   const [presentationInfo, setPresentationInfo] = useState();
   const presentationId = params.id;
-  const [width, setWidth] = useState(1);
-  const [height, setHeight] = useState(2);
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
   const [fHeight, setFHeight] = useState(0);
   const [fWidth, setFWidth] = useState(0);
   const [zoom, setZoom] = useState(false);
@@ -25,9 +25,7 @@ const DisplayBook = () => {
   const divRef = useRef();
   const handleResize = () => {
     const doubleWidth = width * 2;
-
     const divElement = divRef.current;
-
     if (
       divElement &&
       height / doubleWidth >= divElement.clientHeight / divElement.clientWidth
@@ -42,21 +40,7 @@ const DisplayBook = () => {
         Math.ceil((divElement.clientWidth * 0.9 * height) / doubleWidth)
       );
     }
-
-    console.log({ width });
-    console.log({ height });
-
-    // }
   };
-  // useEffect(() => {
-  //   // you can change any settings
-  //   //***  auto resize
-  //   handleResize();
-  //   window.addEventListener('resize', handleResize);
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
 
   const pages = [
     {
@@ -82,8 +66,9 @@ const DisplayBook = () => {
       const response = await fetch(process.env.PUBLIC_URL + '/db.json');
 
       const currentPresentation = await response.json();
-
-      if (!currentPresentation.presentations[presentationId]) {
+      const presentationData =
+        currentPresentation.presentations[presentationId];
+      if (!presentationData) {
         const presentationRequestData = JSON.parse(
           localStorage.getItem('currentPresentation')
         );
@@ -91,8 +76,10 @@ const DisplayBook = () => {
           presentationRequestData
         );
       } else {
+        setHeight(presentationData.height);
+        setWidth(presentationData.width);
         setPresentationInfo({
-          ...currentPresentation.presentations[presentationId],
+          ...presentationData,
           directory:
             process.env.PUBLIC_URL +
             '/presentationsDirectory/' +
@@ -100,27 +87,17 @@ const DisplayBook = () => {
             '/outputImages',
         });
       }
-      setWidth(currentPresentation.presentations[presentationId].width);
-      setHeight(currentPresentation.presentations[presentationId].height);
-      console.log(
-        currentPresentation.presentations[presentationId].height,
-        currentPresentation.presentations[presentationId].width,
-        '************************'
-      );
     })();
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [width, height]);
 
   return (
     <>
-      {/* {presentationInfo && ( */}
       <Wrapper bg={bgColor}>
-        {console.log({ presentationInfo })}
         <div className="divRef" ref={divRef}>
           {fHeight > 0 && presentationInfo?.directory && (
             <BookPreparation
@@ -166,7 +143,6 @@ const DisplayBook = () => {
           handleResize={handleResize}
         />
       </Wrapper>
-      {/* )} */}
     </>
   );
 };

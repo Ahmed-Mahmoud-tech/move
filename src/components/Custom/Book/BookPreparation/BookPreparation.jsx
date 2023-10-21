@@ -215,7 +215,7 @@ const BookPreparation = ({
 
   return (
     <>
-      <Wrapper Width={BookWidth + 'px'}>
+      <Wrapper bookWidth={BookWidth + 'px'}>
         {Object.keys(constImages).length != 0 && (
           <div className="book">{updatedComp}</div>
         )}

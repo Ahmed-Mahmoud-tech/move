@@ -33,7 +33,7 @@ exports.pdfToImages = async (pdfFilePath, presentationId) => {
     });
 
   return pdfPoppler.info(pdfFilePath).then((pdfInfo) => {
-    // console.log(pdfInfo, '0000000');
+    console.log(pdfInfo, '0000000');
     return pdfInfo;
   });
 };

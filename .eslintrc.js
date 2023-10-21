@@ -39,5 +39,7 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'no-mixed-spaces-and-tabs': 'error',
     'react/display-name': 'off',
+    'prettier/prettier': 'off',
+    'linebreak-style': 'off',
   },
 };

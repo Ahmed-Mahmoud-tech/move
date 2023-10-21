@@ -69,8 +69,9 @@ function MainBook({
   }, []);
 
   useEffect(() => {
+    let intervalFlip;
     if (autoFlip) {
-      const autoFlipFun = () => {
+      let autoFlipFun = () => {
         const currentFlip = flipBookRef.current?.getPageFlip();
         rtl ? currentFlip?.flipPrev() : currentFlip?.flipNext();
         if (rtl) {
@@ -85,8 +86,9 @@ function MainBook({
           }
         }
       };
-      const intervalFlip = setInterval(autoFlipFun, autoFlipTime * 1000);
+      intervalFlip = setInterval(autoFlipFun, autoFlipTime * 1000);
     }
+    return () => clearInterval(intervalFlip);
   }, [autoFlip]);
 
   const onFlip = () => {

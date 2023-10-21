@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   /* box-shadow: inset 0 15px 82px 5px #101010; */
   /* box-shadow: inset 0 15px 100px 100px #00000030; */
   .book {
-    width: ${(props) => props.Width};
+    width: ${(props) => props.bookWidth};
     margin: auto;
   }
 `;
