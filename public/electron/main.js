@@ -30,7 +30,7 @@ app.whenReady().then(() => {
   });
   ipcMain.handle(
     'createPresentation',
-    async (event, { name, direction, file, presentationId }) => {
+    async (event, { name, direction, file, presentationId, pages }) => {
       /// create new folder
       console.log({ presentationId });
       const destinationFolder = await path.join(
@@ -72,6 +72,7 @@ app.whenReady().then(() => {
         width: pdfInfo.width_in_pts,
         height: pdfInfo.height_in_pts,
         directory: `${destinationFolder}/outputImages`,
+        pages,
       };
       data.presentations[presentationId] = newData;
       await fs.writeFileSync(
@@ -82,6 +83,39 @@ app.whenReady().then(() => {
       return await new Promise((resolve) => {
         // setTimeout(() => {
         resolve(newData);
+        // }, 2000);
+      });
+    }
+  );
+  ipcMain.handle(
+    'presentationConfig',
+    async (
+      event,
+      { bgColor, bookShadow, flippingTime, autoFlipTime, presentationId }
+    ) => {
+      /// create new folder
+
+      const data = JSON.parse(jsonData);
+      newData = {
+        bgColor,
+        bookShadow,
+        flippingTime,
+        autoFlipTime,
+      };
+
+      data.presentations[presentationId] = {
+        ...data.presentations[presentationId],
+        ...newData,
+      };
+
+      await fs.writeFileSync(
+        `${path.join(__dirname)}/../db.json`,
+        JSON.stringify(data, null, 2)
+      );
+      // // event.sender.send('action-from-main', 'Action data from main process');
+      return await new Promise((resolve) => {
+        // setTimeout(() => {
+        resolve(data.presentations[presentationId]);
         // }, 2000);
       });
     }

@@ -82,6 +82,7 @@ const BookPreparation = ({
     let startPageRender;
     if ((startPage == pagesLength - 1 || startPage == 0) && isFirstLoad == 0) {
       startPageRender = rtl ? pagesLength - 1 : 0;
+
       setStartPage(startPageRender);
     } else {
       if (goToPageNum >= 0 && goToPageNum < pagesLength) {
@@ -89,6 +90,7 @@ const BookPreparation = ({
         setStartPage(startPageRender);
       } else {
         startPageRender = startPage;
+
         //     // if (goToPageNum == undefined) {
         //     //   startPageRender = rtl ? pagesLength - 1 - startPage : startPage;
         //     // } else {
@@ -132,22 +134,7 @@ const BookPreparation = ({
     if (isFirstLoad != 0) toggleFullscreen();
   }, [full]);
   useEffect(() => {
-    //     // if (autoFlip) {
-    //     //   if (pageNumGO != pageNumGOState) {
-    //     //     runReload(pageNumGO - 1);
-    //     //     setPageNumGOState(pageNumGO);
-    //     //     pageNumGO = null;
-    //     //   } else {
-    //     //     if (rtl) {
-    //     //       runReload(pagesLength - startPage - 1);
-    //     //     } else {
-    //     //       runReload(startPage);
-    //     //     }
-    //     //   }
-    //     // } else {
-
     runReload();
-    //// }
   }, [rtl, flippingTime, autoFlip, reload, bookShadow]);
 
   useEffect(() => {
@@ -179,39 +166,42 @@ const BookPreparation = ({
   }
 
   useEffect(() => {
-    const theImages = {};
+    let theImages = {};
     const totalDigits = pagesCount.length;
     for (let index = 1; index <= pagesCount; index++) {
       let pageNewName = generatePageName(index, totalDigits);
       theImages[pageNewName] = `${directory}/${pageNewName}`;
     }
+
+    //**** add rtl
+
+    if (rtl) {
+      const entries = Object.entries(theImages);
+      const reversedEntries = entries.reverse();
+      const reversedObject = Object.fromEntries(reversedEntries);
+      theImages = reversedObject;
+    }
+
+    // //***   if odd add more image
+
+    if (
+      (Object.keys(theImages).length % 2 != 0 && showCover) ||
+      (Object.keys(theImages).length % 2 == 0 && !showCover)
+    ) {
+      pagesLength++;
+      if (rtl) {
+        theImages = {
+          more: theImages[Object.keys(theImages)[0]],
+          ...theImages,
+        };
+      } else {
+        theImages.more =
+          theImages[Object.keys(theImages)[Object.keys(theImages).length - 1]];
+      }
+    }
+
     setImagesState(theImages);
   }, []);
-
-  //**** add rtl
-
-  if (rtl) {
-    const entries = Object.entries(images);
-    const reversedEntries = entries.reverse();
-    const reversedObject = Object.fromEntries(reversedEntries);
-    setImagesState(reversedObject);
-  }
-
-  //***   if odd add more image
-  if (
-    (Object.keys(images).length % 2 != 0 && showCover) ||
-    (Object.keys(images).length % 2 == 0 && !showCover)
-  ) {
-    pagesLength++;
-    if (rtl) {
-      setImagesState({
-        more: images[Object.keys(images)[0]],
-        ...images,
-      });
-    } else {
-      images.more = images[Object.keys(images)[Object.keys(images).length - 1]];
-    }
-  }
 
   return (
     <>

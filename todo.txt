@@ -1,6 +1,19 @@
-check rtl
-we have issue in autoFlip in ltr
+import and export as a zip
+display your presentations
 
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------
 display phase
 
 //** sidebar

@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -12,20 +12,28 @@ function FileInputExample() {
     name: Yup.string().required('Name is required'),
     direction: Yup.string().required('Language direction is required'),
     file: Yup.mixed().required('File is required'),
+    pages: Yup.array().of(
+      Yup.object().shape({
+        title: Yup.string().required('title is required'),
+        num: Yup.number()
+          .required('Page number is required')
+          .positive()
+          .integer(),
+      })
+    ),
   });
 
   const initialValues = {
     name: 'sss',
     direction: 'ltr',
     file: null,
+    pages: [{ title: '', num: null }],
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      // Handle form submission here, e.g., send data to a server.
-
       const filePath = values.file.path;
       const fileName = values.file.name;
 
@@ -35,19 +43,14 @@ function FileInputExample() {
         direction: values.direction,
         file: { filePath, fileName },
         presentationId,
+        pages: values.pages,
       };
 
       const jsonString = JSON.stringify(data);
       localStorage.setItem('currentPresentation', jsonString);
       navigate(`/display/${presentationId}`);
-      // const response = await window.versions.createPresentation(data);
-      // }
     },
   });
-
-  // useEffect(() => {
-  //   console.log({ data });
-  // }, [data]);
 
   const FileInput = ({ field, form }) => {
     return (
@@ -103,7 +106,62 @@ function FileInputExample() {
             <div>{formik.errors.file}</div>
           )}
         </div>
-
+        {formik.values.pages.map((page, index) => (
+          <div key={index}>
+            <label htmlFor={`pages[${index}].title`}>title:</label>
+            <input
+              type="text"
+              id={`pages[${index}].title`}
+              name={`pages[${index}].title`}
+              onChange={formik.handleChange}
+              value={formik.values.pages[index].title}
+            />
+            {formik.touched.pages &&
+            formik.errors.pages &&
+            formik.errors.pages[index] ? (
+              <div className="text-red-600">
+                {formik.errors.pages[index].title}
+              </div>
+            ) : null}
+            <label htmlFor={`pages[${index}].num`}>Page Number:</label>
+            <input
+              type="number"
+              id={`pages[${index}].num`}
+              name={`pages[${index}].num`}
+              onChange={formik.handleChange}
+              value={formik.values.pages[index].num}
+            />
+            {formik.touched.pages &&
+              formik.errors.pages &&
+              formik.errors.pages[index] && (
+                <div className="text-red-600">
+                  {formik.errors.pages[index].num}
+                </div>
+              )}
+            <button
+              type="button"
+              onClick={() =>
+                formik.setFieldValue(
+                  'pages',
+                  formik.values.pages.filter((_, i) => i !== index)
+                )
+              }
+            >
+              Remove Page
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            formik.setFieldValue('pages', [
+              ...formik.values.pages,
+              { title: '', num: 1 },
+            ])
+          }
+        >
+          Add Page
+        </button>
         <div>
           <button type="submit">Submit</button>
         </div>

@@ -9,6 +9,7 @@ const DisplayBook = () => {
   const [presentationInfo, setPresentationInfo] = useState();
   const presentationId = params.id;
   const [width, setWidth] = useState();
+  const [pagesLength, setPagesLength] = useState();
   const [height, setHeight] = useState();
   const [fHeight, setFHeight] = useState(0);
   const [fWidth, setFWidth] = useState(0);
@@ -22,7 +23,10 @@ const DisplayBook = () => {
   const [bgColor, setBgColor] = useState('#000');
   const [autoFlip, setAutoFlip] = useState(false);
   const [autoFlipTime, setAutoFlipTime] = useState(1); //per second
+  const [pages, setPages] = useState();
+
   const divRef = useRef();
+
   const handleResize = () => {
     const doubleWidth = width * 2;
     const divElement = divRef.current;
@@ -42,25 +46,6 @@ const DisplayBook = () => {
     }
   };
 
-  const pages = [
-    {
-      num: 1,
-      title: 'page1',
-    },
-    {
-      num: 4,
-      title: 'page4',
-    },
-    {
-      num: 7,
-      title: 'page7',
-    },
-    {
-      num: 12,
-      title: 'page12',
-    },
-  ];
-
   useEffect(() => {
     (async () => {
       const response = await fetch(process.env.PUBLIC_URL + '/db.json');
@@ -75,9 +60,21 @@ const DisplayBook = () => {
         const response = await window.versions.createPresentation(
           presentationRequestData
         );
+        alert('ddddddddddddddddddddggggggggggggggggg6');
       } else {
         setHeight(presentationData.height);
         setWidth(presentationData.width);
+        setPagesLength(presentationData.pagesCount);
+        setPages(presentationData.pages);
+
+        presentationData.bgColor && setBgColor(presentationData.bgColor);
+        presentationData.bookShadow &&
+          setBookShadow(presentationData.bookShadow);
+        presentationData.flippingTime &&
+          setFlippingTime(presentationData.flippingTime);
+        presentationData.autoFlipTime &&
+          setAutoFlipTime(presentationData.autoFlipTime);
+
         setPresentationInfo({
           ...presentationData,
           directory:
@@ -100,48 +97,57 @@ const DisplayBook = () => {
       <Wrapper bg={bgColor}>
         <div className="divRef" ref={divRef}>
           {fHeight > 0 && presentationInfo?.directory && (
-            <BookPreparation
-              rtl={presentationInfo?.direction == 'rtl'}
-              BookWidth={fWidth}
-              BookHeight={fHeight}
-              full={full}
-              zoom={zoom}
-              bookShadow={bookShadow / 100}
-              pagesLength={12}
-              flippingTime={flippingTime >= 0.1 ? flippingTime * 1000 : 1}
-              autoFlip={autoFlip}
-              autoFlipTime={autoFlipTime}
-              setAutoFlip={setAutoFlip}
-              pageNumGO={pageNumGO}
-              reload={reload}
-              directory={presentationInfo?.directory}
-              pagesCount={presentationInfo?.pagesCount}
-            />
+            <>
+              {console.log({ pagesLength }, '66666666666')}
+              <BookPreparation
+                rtl={presentationInfo?.direction == 'rtl'}
+                BookWidth={fWidth}
+                BookHeight={fHeight}
+                full={full}
+                zoom={zoom}
+                bookShadow={bookShadow / 100}
+                pagesLength={pagesLength}
+                flippingTime={flippingTime >= 0.1 ? flippingTime * 1000 : 1}
+                autoFlip={autoFlip}
+                autoFlipTime={autoFlipTime}
+                setAutoFlip={setAutoFlip}
+                pageNumGO={pageNumGO}
+                reload={reload}
+                directory={presentationInfo?.directory}
+                pagesCount={presentationInfo?.pagesCount}
+              />
+            </>
           )}
         </div>
-        <Setting
-          setFull={setFull}
-          full={full}
-          setZoom={setZoom}
-          zoom={zoom}
-          setAutoFlipTime={setAutoFlipTime}
-          autoFlipTime={autoFlipTime}
-          setAutoFlip={setAutoFlip}
-          autoFlip={autoFlip}
-          setPageNumInput={setPageNumInput}
-          pageNumInput={pageNumInput}
-          setPageNumGO={setPageNumGO}
-          setBgColor={setBgColor}
-          bgColor={bgColor}
-          bookShadow={bookShadow}
-          setBookShadow={setBookShadow}
-          flippingTime={flippingTime}
-          setFlippingTime={setFlippingTime}
-          pages={pages}
-          setReload={setReload}
-          reload={reload}
-          handleResize={handleResize}
-        />
+        {pages && (
+          <>
+            {console.log(pages, 'pages', presentationInfo)}
+            <Setting
+              setFull={setFull}
+              full={full}
+              setZoom={setZoom}
+              zoom={zoom}
+              setAutoFlipTime={setAutoFlipTime}
+              autoFlipTime={autoFlipTime}
+              setAutoFlip={setAutoFlip}
+              autoFlip={autoFlip}
+              setPageNumInput={setPageNumInput}
+              pageNumInput={pageNumInput}
+              setPageNumGO={setPageNumGO}
+              setBgColor={setBgColor}
+              bgColor={bgColor}
+              bookShadow={bookShadow}
+              setBookShadow={setBookShadow}
+              flippingTime={flippingTime}
+              setFlippingTime={setFlippingTime}
+              pages={pages}
+              setReload={setReload}
+              reload={reload}
+              handleResize={handleResize}
+              presentationId={presentationId}
+            />
+          </>
+        )}
       </Wrapper>
     </>
   );

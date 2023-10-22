@@ -34,10 +34,22 @@ const Setting = ({
   handleResize,
   setReload,
   reload,
+  presentationId,
 }) => {
   const [menuPosition, setMenuPosition] = useState(false);
   const [closeSideBar, setCloseSideBar] = useState(true);
 
+  const saveConfig = async () => {
+    const Data = {
+      bgColor,
+      bookShadow,
+      flippingTime,
+      autoFlipTime,
+      presentationId,
+    };
+
+    const response = await window.versions.presentationConfig(Data);
+  };
   return (
     <Wrapper fixed={menuPosition} close={closeSideBar}>
       <span
@@ -161,25 +173,30 @@ const Setting = ({
           <div className="index">
             <div className="title">Book Index</div>
             <ul>
-              {pages.map((page, i) => (
-                <li
-                  key={i}
-                  onClick={() => {
-                    setPageNumGO(page.num);
-                    setTimeout(() => {
-                      setPageNumGO('');
-                    }, 1000);
-                  }}
-                  className="indexItem"
-                >
-                  {page.title}
-                </li>
-              ))}
+              {pages &&
+                pages.map((page, i) => (
+                  <li
+                    key={i}
+                    onClick={() => {
+                      setPageNumGO(page.num);
+                      setTimeout(() => {
+                        setPageNumGO('');
+                      }, 1000);
+                    }}
+                    className="indexItem"
+                  >
+                    {page.title}
+                  </li>
+                ))}
             </ul>
           </div>
           <div className="createPresentation">
             <Link to="/">Create Presentation</Link>
           </div>
+
+          <button className="config" onClick={() => saveConfig()}>
+            Save Config
+          </button>
         </div>
       </div>
     </Wrapper>
