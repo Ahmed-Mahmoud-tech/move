@@ -4,6 +4,9 @@ display your presentations
 
 
 
+netstat -ano | findstr :<PORT>
+taskkill /PID <PID> /F
+
 
 
 
