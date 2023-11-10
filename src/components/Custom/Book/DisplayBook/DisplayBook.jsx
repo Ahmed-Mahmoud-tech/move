@@ -3,6 +3,7 @@ import { Wrapper } from './DisplayBook.styled';
 import BookPreparation from '../BookPreparation/BookPreparation';
 import Setting from '../Setting/Setting';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const DisplayBook = () => {
   const params = useParams();
@@ -24,7 +25,6 @@ const DisplayBook = () => {
   const [autoFlip, setAutoFlip] = useState(false);
   const [autoFlipTime, setAutoFlipTime] = useState(1); //per second
   const [pages, setPages] = useState();
-
   const divRef = useRef();
 
   const handleResize = () => {
@@ -57,10 +57,11 @@ const DisplayBook = () => {
         const presentationRequestData = JSON.parse(
           localStorage.getItem('currentPresentation')
         );
-        const response = await window.versions.createPresentation(
+        const response = await axios.post(
+          'http://localhost:8000/createpresentation',
           presentationRequestData
         );
-        alert('ddddddddddddddddddddggggggggggggggggg6');
+        console.log({ response });
       } else {
         setHeight(presentationData.height);
         setWidth(presentationData.width);

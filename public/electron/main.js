@@ -19,24 +19,24 @@ async function createWindow() {
     },
   });
 
-  const backendPath = './public/backend/index.js'; // Adjust the path accordingly
+  // const backendPath = './public/backend/index.js'; // Adjust the path accordingly
 
-  // Run the backend project using child_process
-  const child = exec(`node ${backendPath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-  });
-  // Handle the exit event
-  child.on('exit', (code, signal) => {
-    console.log(`Child process exited with code ${code} and signal ${signal}`);
-  });
+  //// Run the backend project using child_process
+  // const child = exec(`node ${backendPath}`, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`Error: ${error.message}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.error(`stderr: ${stderr}`);
+  //     return;
+  //   }
+  //   console.log(`stdout: ${stdout}`);
+  // });
+  // // Handle the exit event
+  // child.on('exit', (code, signal) => {
+  //   console.log(`Child process exited with code ${code} and signal ${signal}`);
+  // });
 
   win.loadURL('http://localhost:3000');
 }
