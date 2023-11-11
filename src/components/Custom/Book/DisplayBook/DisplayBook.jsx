@@ -57,10 +57,14 @@ const DisplayBook = () => {
         const presentationRequestData = JSON.parse(
           localStorage.getItem('currentPresentation')
         );
-        const response = await axios.post(
-          'http://localhost:8000/createpresentation',
+        const response = await window.versions.createPresentation(
           presentationRequestData
         );
+
+        // const response = await axios.post(
+        //   'http://localhost:8000/createpresentation',
+        //   presentationRequestData
+        // );
         console.log({ response });
       } else {
         setHeight(presentationData.height);

@@ -1,12 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs-extra');
-const { v4: uuidv4 } = require('uuid');
-const { exec } = require('child_process');
-
-// const path = require('path');
+const pdfPoppler = require('pdf-poppler');
 
 const path = require('node:path');
-const { pdfToImages } = require('../electron/lib/fileFunctions');
 async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
@@ -18,25 +14,6 @@ async function createWindow() {
       devTools: true,
     },
   });
-
-  // const backendPath = './public/backend/index.js'; // Adjust the path accordingly
-
-  //// Run the backend project using child_process
-  // const child = exec(`node ${backendPath}`, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`Error: ${error.message}`);
-  //     return;
-  //   }
-  //   if (stderr) {
-  //     console.error(`stderr: ${stderr}`);
-  //     return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  // });
-  // // Handle the exit event
-  // child.on('exit', (code, signal) => {
-  //   console.log(`Child process exited with code ${code} and signal ${signal}`);
-  // });
 
   win.loadURL('http://localhost:3000');
 }
@@ -51,33 +28,52 @@ app.whenReady().then(() => {
   ipcMain.handle(
     'createPresentation',
     async (event, { name, direction, file, presentationId, pages }) => {
-      /// create new folder
-      console.log({ presentationId });
       const destinationFolder = await path.join(
         __dirname,
-        '../presentationsDirectory',
+        '../../ooo',
         presentationId
       );
-      await fs.mkdirSync(destinationFolder);
-      /// copy file to public
-      await fs.copy(
-        file.filePath,
-        `${destinationFolder}/${file.fileName}`,
-        (err) => {
-          if (err) {
-            console.error('Error moving the file:', err);
-          } else {
-            console.log('File moved successfully');
-          }
-        }
-      );
+
+      !fs.existsSync(destinationFolder) &&
+        (await fs.mkdirSync(destinationFolder));
+      await fs.copy(file.filePath, `${destinationFolder}/${file.fileName}`);
+
+      //!********************************************
+
+      const pdfToImages = async (pdfFilePath, presentationId) => {
+        const outputFolder = path.join(
+          __dirname,
+          '../../ooo',
+          presentationId,
+          'outputImages'
+        );
+
+        !fs.existsSync(outputFolder) && (await fs.mkdirSync(outputFolder));
+        const opts = {
+          format: 'png',
+          out_dir: outputFolder,
+          out_prefix: 'page',
+        };
+
+        await pdfPoppler.convert(pdfFilePath, opts);
+
+        await fs.copy(
+          path.join(__dirname, '../../ooo', presentationId),
+          path.join(__dirname, '../presentationsDirectory', presentationId)
+        );
+
+        return pdfPoppler.info(pdfFilePath).then((pdfInfo) => {
+          return pdfInfo;
+        });
+      };
 
       const pdfInfo = await pdfToImages(
         `${destinationFolder}/${file.fileName}`,
         presentationId
       );
 
-      /// set the presentation data to db
+      //!********************************************
+
       const jsonData = await fs.readFileSync(
         `${path.join(__dirname)}/../db.json`,
         'utf-8'
@@ -99,57 +95,8 @@ app.whenReady().then(() => {
         `${path.join(__dirname)}/../db.json`,
         JSON.stringify(data, null, 2)
       );
-      // // event.sender.send('action-from-main', 'Action data from main process');
-      return await new Promise((resolve) => {
-        // setTimeout(() => {
-        resolve(newData);
-        // }, 2000);
-      });
     }
   );
-  ipcMain.handle(
-    'presentationConfig',
-    async (
-      event,
-      { bgColor, bookShadow, flippingTime, autoFlipTime, presentationId }
-    ) => {
-      /// create new folder
-
-      const data = JSON.parse(jsonData);
-      newData = {
-        bgColor,
-        bookShadow,
-        flippingTime,
-        autoFlipTime,
-      };
-
-      data.presentations[presentationId] = {
-        ...data.presentations[presentationId],
-        ...newData,
-      };
-
-      await fs.writeFileSync(
-        `${path.join(__dirname)}/../db.json`,
-        JSON.stringify(data, null, 2)
-      );
-      // // event.sender.send('action-from-main', 'Action data from main process');
-      return await new Promise((resolve) => {
-        // setTimeout(() => {
-        resolve(data.presentations[presentationId]);
-        // }, 2000);
-      });
-    }
-  );
-
-  // app.on('activate', () => {
-  //   console.log('.....................................');
-  //   if (BrowserWindow.getAllWindows().length === 0) {
-  //     createWindow();
-  //   }
-
-  //   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-  //   Menu.setApplicationMenu(mainMenu);
-  // });
 });
 
 app.on('window-all-closed', () => {
@@ -157,9 +104,3 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
-// const mainMenuTemplate = [
-//   {
-//     label: 'File00',
-//   },
-// ];
