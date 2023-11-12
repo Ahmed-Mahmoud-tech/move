@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper } from './Welcome.styled';
 import PdfToImagesConverter from './PdfToImagesConverter/PdfToImagesConverter';
+import SelectPresentation from './SelectPresentation/SelectPresentation';
 
 const Welcome = () => {
   return (
@@ -8,6 +9,7 @@ const Welcome = () => {
       Welcome
       <div>
         <PdfToImagesConverter />
+        <SelectPresentation />
       </div>
     </Wrapper>
   );

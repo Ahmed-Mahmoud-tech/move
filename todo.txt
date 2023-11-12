@@ -1,22 +1,4 @@
-delete all in folder ooo
-set loading for laod pdf images
-
 import and export as a zip
-display your presentations
-
-
-
-
-netstat -ano | findstr :<PORT>
-taskkill /PID <PID> /F
-
-
-
-
-
-
-
-
 
 
 -------------------------

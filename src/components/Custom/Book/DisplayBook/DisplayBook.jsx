@@ -3,7 +3,6 @@ import { Wrapper } from './DisplayBook.styled';
 import BookPreparation from '../BookPreparation/BookPreparation';
 import Setting from '../Setting/Setting';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 const DisplayBook = () => {
   const params = useParams();
@@ -53,6 +52,7 @@ const DisplayBook = () => {
       const currentPresentation = await response.json();
       const presentationData =
         currentPresentation.presentations[presentationId];
+
       if (!presentationData) {
         const presentationRequestData = JSON.parse(
           localStorage.getItem('currentPresentation')
@@ -60,25 +60,20 @@ const DisplayBook = () => {
         const response = await window.versions.createPresentation(
           presentationRequestData
         );
-
-        // const response = await axios.post(
-        //   'http://localhost:8000/createpresentation',
-        //   presentationRequestData
-        // );
-        console.log({ response });
       } else {
         setHeight(presentationData.height);
         setWidth(presentationData.width);
         setPagesLength(presentationData.pagesCount);
         setPages(presentationData.pages);
-
-        presentationData.bgColor && setBgColor(presentationData.bgColor);
-        presentationData.bookShadow &&
-          setBookShadow(presentationData.bookShadow);
-        presentationData.flippingTime &&
-          setFlippingTime(presentationData.flippingTime);
-        presentationData.autoFlipTime &&
-          setAutoFlipTime(presentationData.autoFlipTime);
+        console.log(presentationData, '******************/****************');
+        presentationData.config?.bgColor &&
+          setBgColor(presentationData.config?.bgColor);
+        presentationData.config?.bookShadow &&
+          setBookShadow(presentationData.config?.bookShadow);
+        presentationData.config?.flippingTime &&
+          setFlippingTime(presentationData.config?.flippingTime);
+        presentationData.config?.autoFlipTime &&
+          setAutoFlipTime(presentationData.config?.autoFlipTime);
 
         setPresentationInfo({
           ...presentationData,
@@ -101,32 +96,47 @@ const DisplayBook = () => {
     <>
       <Wrapper bg={bgColor}>
         <div className="divRef" ref={divRef}>
-          {fHeight > 0 && presentationInfo?.directory && (
+          {presentationInfo ? (
             <>
-              {console.log({ pagesLength }, '66666666666')}
-              <BookPreparation
-                rtl={presentationInfo?.direction == 'rtl'}
-                BookWidth={fWidth}
-                BookHeight={fHeight}
-                full={full}
-                zoom={zoom}
-                bookShadow={bookShadow / 100}
-                pagesLength={pagesLength}
-                flippingTime={flippingTime >= 0.1 ? flippingTime * 1000 : 1}
-                autoFlip={autoFlip}
-                autoFlipTime={autoFlipTime}
-                setAutoFlip={setAutoFlip}
-                pageNumGO={pageNumGO}
-                reload={reload}
-                directory={presentationInfo?.directory}
-                pagesCount={presentationInfo?.pagesCount}
-              />
+              {fHeight > 0 && presentationInfo?.directory && (
+                <>
+                  <BookPreparation
+                    rtl={presentationInfo?.direction == 'rtl'}
+                    BookWidth={fWidth}
+                    BookHeight={fHeight}
+                    full={full}
+                    zoom={zoom}
+                    bookShadow={bookShadow / 100}
+                    pagesLength={pagesLength}
+                    flippingTime={flippingTime >= 0.1 ? flippingTime * 1000 : 1}
+                    autoFlip={autoFlip}
+                    autoFlipTime={autoFlipTime}
+                    setAutoFlip={setAutoFlip}
+                    pageNumGO={pageNumGO}
+                    reload={reload}
+                    directory={presentationInfo?.directory}
+                    pagesCount={presentationInfo?.pagesCount}
+                  />
+                </>
+              )}
             </>
+          ) : (
+            <div
+              style={{
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                background: 'darkblue',
+              }}
+            >
+              loading
+            </div>
           )}
         </div>
         {pages && (
           <>
-            {console.log(pages, 'pages', presentationInfo)}
             <Setting
               setFull={setFull}
               full={full}
