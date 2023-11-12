@@ -1,162 +1,59 @@
 {
   "presentations": {
-    "564ca121-4d74-488c-8af3-338cf5a2fb36": {
+    "2d1fa200-b1d2-4efd-abca-04de78931ccf": {
       "name": "sss",
       "direction": "ltr",
-      "id": "564ca121-4d74-488c-8af3-338cf5a2fb36",
+      "id": "2d1fa200-b1d2-4efd-abca-04de78931ccf",
       "pagesCount": "10",
       "width": 595.27,
       "height": 841.89,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\564ca121-4d74-488c-8af3-338cf5a2fb36/outputImages",
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\2d1fa200-b1d2-4efd-abca-04de78931ccf/outputImages",
       "pages": []
     },
-    "000cff3e-dd9a-4a46-b07a-aa8473ea10b9": {
+    "530f7092-718a-481b-a730-4e03cc145a0d": {
       "name": "sss",
       "direction": "ltr",
-      "id": "000cff3e-dd9a-4a46-b07a-aa8473ea10b9",
-      "pagesCount": "2",
-      "width": 612,
-      "height": 792,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\000cff3e-dd9a-4a46-b07a-aa8473ea10b9/outputImages",
+      "id": "530f7092-718a-481b-a730-4e03cc145a0d",
+      "pagesCount": "10",
+      "width": 595.27,
+      "height": 841.89,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\530f7092-718a-481b-a730-4e03cc145a0d/outputImages",
+      "pages": []
+    },
+    "631b1845-076c-436d-af40-21610a52a9b3": {
+      "name": "sss",
+      "direction": "ltr",
+      "id": "631b1845-076c-436d-af40-21610a52a9b3",
+      "pagesCount": "10",
+      "width": 595.27,
+      "height": 841.89,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\631b1845-076c-436d-af40-21610a52a9b3/outputImages",
+      "pages": []
+    },
+    "2e64393d-4fce-4548-899c-858069800248": {
+      "name": "sss",
+      "direction": "ltr",
+      "id": "2e64393d-4fce-4548-899c-858069800248",
+      "pagesCount": "10",
+      "width": 595.27,
+      "height": 841.89,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\2e64393d-4fce-4548-899c-858069800248/outputImages",
       "pages": [],
       "config": {
-        "bgColor": "#000",
-        "bookShadow": 50,
+        "bgColor": "#560101",
+        "bookShadow": "50",
         "flippingTime": 0.9,
         "autoFlipTime": 1
       }
     },
-    "86871e64-805d-4d64-95b5-4a8763082a96": {
+    "ed73af9c-fe28-47b7-a594-2a59cf0c4fe3": {
       "name": "sss",
       "direction": "ltr",
-      "id": "86871e64-805d-4d64-95b5-4a8763082a96",
-      "pagesCount": "67",
-      "width": 360,
-      "height": 504,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\86871e64-805d-4d64-95b5-4a8763082a96/outputImages",
-      "pages": []
-    },
-    "b3eeecc8-364a-465a-8c54-569c1cc7fff8": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "b3eeecc8-364a-465a-8c54-569c1cc7fff8",
-      "pagesCount": "10",
-      "width": 595.27,
-      "height": 841.89,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\b3eeecc8-364a-465a-8c54-569c1cc7fff8/outputImages",
-      "pages": [
-        {
-          "title": "asdfdfddd",
-          "num": 5
-        },
-        {
-          "title": "iiiiiii",
-          "num": 9
-        }
-      ],
-      "config": {
-        "bgColor": "#2e0000",
-        "bookShadow": "75",
-        "flippingTime": "2",
-        "autoFlipTime": 1
-      }
-    },
-    "b6ccef6b-34b7-431a-8811-f57d1bd19779": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "b6ccef6b-34b7-431a-8811-f57d1bd19779",
-      "pagesCount": "2",
-      "width": 612,
-      "height": 792,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\b6ccef6b-34b7-431a-8811-f57d1bd19779/outputImages",
-      "pages": []
-    },
-    "4f407717-7d0e-4fc8-b1d4-1774980f17d4": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "4f407717-7d0e-4fc8-b1d4-1774980f17d4",
-      "pagesCount": "10",
-      "width": 595.27,
-      "height": 841.89,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\4f407717-7d0e-4fc8-b1d4-1774980f17d4/outputImages",
-      "pages": []
-    },
-    "e5c69071-fcdd-413a-a447-5d396142ef8d": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "e5c69071-fcdd-413a-a447-5d396142ef8d",
-      "pagesCount": "2",
-      "width": 612,
-      "height": 792,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\e5c69071-fcdd-413a-a447-5d396142ef8d/outputImages",
-      "pages": []
-    },
-    "8e4483ab-16ec-4faa-924f-c648c2e15520": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "8e4483ab-16ec-4faa-924f-c648c2e15520",
-      "pagesCount": "2",
-      "width": 612,
-      "height": 792,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\8e4483ab-16ec-4faa-924f-c648c2e15520/outputImages",
-      "pages": []
-    },
-    "21bdec96-18aa-4ddb-8446-03f68036a86d": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "21bdec96-18aa-4ddb-8446-03f68036a86d",
-      "pagesCount": "10",
-      "width": 595.27,
-      "height": 841.89,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\21bdec96-18aa-4ddb-8446-03f68036a86d/outputImages",
-      "pages": []
-    },
-    "4ef34291-31b5-47b8-b87e-61d44cad8773": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "4ef34291-31b5-47b8-b87e-61d44cad8773",
-      "pagesCount": "67",
-      "width": 360,
-      "height": 504,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\4ef34291-31b5-47b8-b87e-61d44cad8773/outputImages",
-      "pages": []
-    },
-    "67c677c8-8c62-4079-a1a7-0b7b084c3954": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "67c677c8-8c62-4079-a1a7-0b7b084c3954",
-      "pagesCount": "2",
-      "width": 612,
-      "height": 792,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\67c677c8-8c62-4079-a1a7-0b7b084c3954/outputImages",
-      "pages": []
-    },
-    "7852d1af-1de3-4ef6-8245-cb053ed1774a": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "7852d1af-1de3-4ef6-8245-cb053ed1774a",
-      "pagesCount": "10",
-      "width": 595.27,
-      "height": 841.89,
-      "directory": "D:\\personal\\work\\move\\preparingFolder\\7852d1af-1de3-4ef6-8245-cb053ed1774a/outputImages",
-      "pages": []
-    },
-    "7cf26271-1b04-4dd6-aebd-07da59825db6": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "7cf26271-1b04-4dd6-aebd-07da59825db6",
+      "id": "ed73af9c-fe28-47b7-a594-2a59cf0c4fe3",
       "pagesCount": "1682",
       "width": 612,
       "height": 792,
-      "pages": []
-    },
-    "ab019bb2-99ac-4fca-831e-a66c8e3c9955": {
-      "name": "sss",
-      "direction": "ltr",
-      "id": "ab019bb2-99ac-4fca-831e-a66c8e3c9955",
-      "pagesCount": "618",
-      "width": 583.68,
-      "height": 774.96,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\ed73af9c-fe28-47b7-a594-2a59cf0c4fe3/outputImages",
       "pages": []
     }
   }
