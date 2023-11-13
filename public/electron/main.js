@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const pdfPoppler = require('pdf-poppler');
 const archiver = require('archiver');
 const opn = require('opn');
+const unzipper = require('unzipper');
 
 const path = require('node:path');
 async function createWindow() {
@@ -54,7 +55,6 @@ app.whenReady().then(() => {
         '../../preparationFolder',
         presentationId
       );
-      console.log('11111111111111111111');
       await fs.mkdirSync(await path.join(__dirname, '../../preparationFolder'));
 
       !fs.existsSync(destinationFolder) &&
@@ -178,7 +178,6 @@ app.whenReady().then(() => {
 
   ipcMain.handle('exportPresentation', async (event, id) => {
     const folderPath = path.join(__dirname, `../../${id}`);
-    const outputDirectory = path.join(__dirname, '../..');
 
     await fs.copy(
       path.join(__dirname, `../presentationsDirectory/${id}`),
@@ -194,7 +193,7 @@ app.whenReady().then(() => {
 
     await fs.writeFileSync(
       path.join(__dirname, `../../${id}/config.json`),
-      JSON.stringify({ [id]: data.presentations[id] }),
+      JSON.stringify(data.presentations[id]),
       'utf-8'
     );
 
@@ -218,12 +217,140 @@ app.whenReady().then(() => {
             recursive: true,
           });
           fs.rm(path.join(__dirname, '..', `${id}.zip`), { recursive: true });
-        }, 10000);
+        }, 1000);
       })
       .catch((error) => {
         console.error('Error compressing folder:', error);
       });
   });
+
+  ipcMain.handle('deletePresentation', async (event, id) => {
+    await fs.rm(path.join(__dirname, `../presentationsDirectory/${id}`), {
+      recursive: true,
+    });
+
+    const jsonData = await fs.readFileSync(
+      `${path.join(__dirname)}/../db.json`,
+      'utf-8'
+    );
+
+    const data = JSON.parse(jsonData);
+
+    delete data.presentations[id];
+    console.log(
+      path.join(__dirname, '/../db.json'),
+      '444444444444444444',
+      data
+    );
+    await fs.writeFileSync(
+      path.join(__dirname, '/../db.json'),
+      JSON.stringify(data),
+      'utf-8'
+    );
+  });
+  ipcMain.handle(
+    'importPresentation',
+    async (event, { fileName, filePath }) => {
+      if (
+        fs.existsSync(
+          path.join(
+            __dirname,
+            `../presentationsDirectory/${fileName.split('.')[0]}`
+          )
+        )
+      ) {
+        console.log('yes');
+        await fs.rm(
+          path.join(
+            __dirname,
+            `../presentationsDirectory/${fileName.split('.')[0]}`
+          ),
+          { recursive: true }
+        );
+      }
+
+      await fs.mkdirSync(
+        await path.join(
+          __dirname,
+          `../presentationsDirectory/${fileName.split('.')[0]}`
+        )
+      );
+
+      await fs.copy(
+        filePath,
+        path.join(
+          __dirname,
+          '../presentationsDirectory',
+          fileName.split('.')[0],
+          fileName
+        )
+      );
+
+      // Replace 'path/to/your/file.zip' with the path to your zip file
+      const zipFilePath = path.join(
+        __dirname,
+        '../presentationsDirectory',
+        fileName.split('.')[0],
+        fileName
+      );
+
+      // Replace 'path/to/extract' with the path where you want to extract the contents
+      const extractionPath = path.join(
+        __dirname,
+        '../presentationsDirectory',
+        fileName.split('.')[0]
+      );
+
+      // Create a readable stream from the zip file
+      const readStream = fs.createReadStream(zipFilePath);
+
+      // Pipe the stream through unzipper to extract the contents
+      await readStream
+        .pipe(unzipper.Extract({ path: extractionPath }))
+        .on('close', async () => {
+          console.log('Extraction complete!');
+
+          const jsonData = await fs.readFileSync(
+            `${path.join(__dirname)}/../db.json`,
+            'utf-8'
+          );
+
+          const jsonPresentationData = await fs.readFileSync(
+            path.join(
+              __dirname,
+              '../presentationsDirectory',
+              fileName.split('.')[0],
+              'config.json'
+            ),
+            'utf-8'
+          );
+
+          const data = JSON.parse(jsonData);
+          const presentationData = JSON.parse(jsonPresentationData);
+
+          data.presentations[presentationData.id] = presentationData;
+
+          await fs.writeFileSync(
+            path.join(__dirname, '/../db.json'),
+            JSON.stringify(data),
+            'utf-8'
+          );
+        })
+        .on('error', (err) => {
+          console.error('Error extracting zip file:', err);
+        });
+
+      await fs.rm(
+        path.join(
+          __dirname,
+          '../presentationsDirectory',
+          fileName.split('.')[0],
+          fileName
+        ),
+        { recursive: true }
+      );
+    }
+  );
 });
 
 app.on('window-all-closed', () => {

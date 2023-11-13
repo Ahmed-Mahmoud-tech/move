@@ -1,4 +1,8 @@
-import and export as a zip
+handle code and style
+add video and link
+screen record
+manage ads
+
 
 
 -------------------------
@@ -41,10 +45,3 @@ add video     == wait
 add link      == wait
 
 
-///// json db
-
-name
-id
-dir
-pagesNumber
-settingConfig  

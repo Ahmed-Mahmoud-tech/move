@@ -15,21 +15,42 @@ export default function SelectPresentation() {
     await window.versions.exportPresentation(id);
   };
 
+  const uploadPre = async (e) => {
+    await window.versions.importPresentation({
+      fileName: e.target.files[0].name,
+      filePath: e.target.files[0].path,
+    });
+  };
+  const deletePre = async (id) => {
+    await window.versions.deletePresentation(id);
+  };
+
   return (
     <div>
       SelectPresentation
       {list?.presentations &&
         Object.values(list?.presentations).map((presentation, index) => (
           <div key={index}>
-            <a href={`/display/${presentation.id}`}>{presentation.name}</a>{' '}
+            <a href={`/display/${presentation.id}`}>{presentation.name}</a>
             <span
               style={{ background: 'green' }}
               onClick={() => exportPresentation(presentation.id)}
             >
               exportPresentation
             </span>
+            <span
+              style={{ background: 'red', padding: '5px' }}
+              onClick={() => deletePre(presentation.id)}
+            >
+              x
+            </span>
           </div>
         ))}
+      <hr />
+      <hr />
+      <div className="uploadPresentation">
+        <input type="file" name="file" id="" onChange={(e) => uploadPre(e)} />
+      </div>
     </div>
   );
 }

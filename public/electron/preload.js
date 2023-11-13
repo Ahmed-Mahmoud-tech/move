@@ -7,4 +7,6 @@ contextBridge.exposeInMainWorld('versions', {
   createPresentation: (e) => ipcRenderer.invoke('createPresentation', e),
   presentationConfig: (e) => ipcRenderer.invoke('presentationConfig', e),
   exportPresentation: (e) => ipcRenderer.invoke('exportPresentation', e),
+  importPresentation: (e) => ipcRenderer.invoke('importPresentation', e),
+  deletePresentation: (e) => ipcRenderer.invoke('deletePresentation', e),
 });

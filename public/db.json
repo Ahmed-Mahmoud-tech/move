@@ -1,3 +1,24 @@
 {
-  "presentations": {}
+  "presentations": {
+    "02999234-5160-44c7-bf1b-b86a02fdbef5": {
+      "name": "sss",
+      "direction": "ltr",
+      "id": "02999234-5160-44c7-bf1b-b86a02fdbef5",
+      "pagesCount": "10",
+      "width": 595.27,
+      "height": 841.89,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\02999234-5160-44c7-bf1b-b86a02fdbef5/outputImages",
+      "pages": []
+    },
+    "9e2bff93-c69f-4edb-8158-2e524a1f95aa": {
+      "name": "sss",
+      "direction": "ltr",
+      "id": "9e2bff93-c69f-4edb-8158-2e524a1f95aa",
+      "pagesCount": "2",
+      "width": 612,
+      "height": 792,
+      "directory": "D:\\personal\\work\\move\\preparationFolder\\9e2bff93-c69f-4edb-8158-2e524a1f95aa/outputImages",
+      "pages": []
+    }
+  }
 }
