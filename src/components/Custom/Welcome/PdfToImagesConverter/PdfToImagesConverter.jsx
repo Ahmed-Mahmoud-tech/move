@@ -65,7 +65,7 @@ function FileInputExample() {
 
   return (
     <div>
-      <h1>useFormik and Yup Form</h1>
+      <h1 className=' text-red-800'>useFormik and Yup Form</h1>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>
