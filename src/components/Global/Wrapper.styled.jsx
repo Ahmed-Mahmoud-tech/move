@@ -10,7 +10,9 @@ const GlobalStyles = createGlobalStyle`
     --mainColor: purple;
     --secondColor: green;
     --thirdColor: orange;
+    --darkBlueColor: #172554;
     --darkBg: #1e1e1e;
+    --error: red
 }
 
 

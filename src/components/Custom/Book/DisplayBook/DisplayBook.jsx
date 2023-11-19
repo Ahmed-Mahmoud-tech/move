@@ -65,7 +65,6 @@ const DisplayBook = () => {
         setWidth(presentationData.width);
         setPagesLength(presentationData.pagesCount);
         setPages(presentationData.pages);
-        console.log(presentationData, '******************/****************');
         presentationData.config?.bgColor &&
           setBgColor(presentationData.config?.bgColor);
         presentationData.config?.bookShadow &&

@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../../../Shard/Button/Button';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
+import Pagination from '../../../Shard/Pagination/Pagination';
+import FileUpload from '../../../Shard/FileUpload/FileUpload';
 
 export default function SelectPresentation() {
   const [list, setList] = useState();
@@ -7,10 +11,14 @@ export default function SelectPresentation() {
       const response = await fetch(process.env.PUBLIC_URL + '/db.json');
       const responseList = await response.json();
       setList(responseList);
-      console.log(responseList);
     })();
   }, []);
-
+  const images = [
+    'https://placekitten.com/800/400',
+    'https://placekitten.com/801/400',
+    'https://placekitten.com/802/400',
+    'https://placekitten.com/803/400',
+  ];
   const exportPresentation = async (id) => {
     await window.versions.exportPresentation(id);
   };
@@ -26,30 +34,35 @@ export default function SelectPresentation() {
   };
 
   return (
-    <div>
-      SelectPresentation
-      {list?.presentations &&
-        Object.values(list?.presentations).map((presentation, index) => (
-          <div key={index}>
-            <a href={`/display/${presentation.id}`}>{presentation.name}</a>
-            <span
-              style={{ background: 'green' }}
-              onClick={() => exportPresentation(presentation.id)}
-            >
-              exportPresentation
-            </span>
-            <span
-              style={{ background: 'red', padding: '5px' }}
-              onClick={() => deletePre(presentation.id)}
-            >
-              x
-            </span>
-          </div>
-        ))}
-      <hr />
-      <hr />
+    <div className="w-[40%] min-w-[340px] mx-auto">
+      <h2 className="text-2xl font-semibold">Your Presentation</h2>
+      <div className="search relative  my-2">
+        <FaMagnifyingGlass className="absolute top-3 left-3" />
+
+        <input
+          type="text"
+          name=""
+          id=""
+          className="w-full p-2 pl-9 bg-blackColor border border-whiteColor rounded-lg overflow-hidden"
+        />
+      </div>
+
+      <div className="mb-4">
+        {list?.presentations && (
+          <Pagination
+            className=""
+            presentations={Object.values(list?.presentations)}
+          />
+        )}
+      </div>
+
       <div className="uploadPresentation">
         <input type="file" name="file" id="" onChange={(e) => uploadPre(e)} />
+        {/* <FileUpload
+          text="Upload the exported book"
+          name="Drag and drop exported book or click to select one"
+          change={(e) => uploadPre(e)}
+        /> */}
       </div>
     </div>
   );

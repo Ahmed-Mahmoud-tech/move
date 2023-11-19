@@ -6,10 +6,12 @@ import SelectPresentation from './SelectPresentation/SelectPresentation';
 const Welcome = () => {
   return (
     <Wrapper>
-      Welcome
-      <div>
-        <PdfToImagesConverter />
-        <SelectPresentation />
+      <div className="appWrapper p-[5%]">
+        <div className="logo text-5xl text-mainColor font-bold mb-4">MOVE</div>
+        <div className="flex flex-wrap">
+          <PdfToImagesConverter />
+          <SelectPresentation />
+        </div>
       </div>
     </Wrapper>
   );
