@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/public/presentationDirectory
+/public/presentationsDirectory
 /.pnp
 .pnp.js
 
