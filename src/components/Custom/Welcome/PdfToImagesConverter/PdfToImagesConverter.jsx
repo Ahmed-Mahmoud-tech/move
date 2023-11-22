@@ -70,8 +70,10 @@ function FileInputExample() {
   });
 
   return (
-    <div className="w-[48%] min-w-[340px] m-auto">
-      <h1 className="text-2xl font-semibold">Create New Presentation</h1>
+    <div className="w-[48%] min-w-[340px] m-auto mb-5">
+      <h1 className="text-2xl font-semibold text-yellowColor">
+        Create New Presentation
+      </h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="py-2">
           <TextInput formik={formik} name="name" placeholder="Name" />
@@ -100,7 +102,8 @@ function FileInputExample() {
         <div className="py-2">
           <FileUpload
             text="Upload pdf book"
-            name="Drag and drop pdf book or click to select one"
+            name="file"
+            // name="Drag and drop pdf book or click to select one"
             change={(event) => {
               formik.setFieldValue('file', event.currentTarget.files[0]);
             }}
@@ -110,9 +113,9 @@ function FileInputExample() {
 
         <div className="p-4 border rounded-md my-2 ">
           <div className="title text-xl flex justify-between items-center">
-            <h2 className="title text-thirdColor">Create the Book Index</h2>
+            <h2 className="title text-secondColor">Create the Book Index</h2>
             <Button
-              className="bg-thirdColor py-1 px-3 text-lg rounded"
+              className="bg-secondColor py-1 px-3 text-lg rounded text-darkBlueColor"
               text={'Add New'}
               action={() =>
                 formik.setFieldValue('pages', [
@@ -157,7 +160,7 @@ function FileInputExample() {
               </div>
               <Button
                 text={<MdClose />}
-                className={'bg-error p-2 rounded text-2xl'}
+                className={'bg-thirdColor p-2 rounded text-2xl'}
                 action={() =>
                   formik.setFieldValue(
                     'pages',

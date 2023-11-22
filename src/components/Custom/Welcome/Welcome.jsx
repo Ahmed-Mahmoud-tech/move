@@ -6,7 +6,7 @@ import SelectPresentation from './SelectPresentation/SelectPresentation';
 const Welcome = () => {
   return (
     <Wrapper>
-      <div className="appWrapper p-[5%]">
+      <div className="appWrapper p-[5%] max-w-[100vw]">
         <div className="logo text-5xl text-mainColor font-bold mb-4">MOVE</div>
         <div className="flex flex-wrap">
           <PdfToImagesConverter />

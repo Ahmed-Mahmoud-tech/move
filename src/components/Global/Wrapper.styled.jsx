@@ -7,12 +7,13 @@ const GlobalStyles = createGlobalStyle`
     --bigFont:1.5rem;
     --whiteColor:#fff;
     --blackColor:#000;
-    --mainColor: purple;
-    --secondColor: green;
-    --thirdColor: orange;
-    --darkBlueColor: #172554;
+    --darkBlueColor: #2a2f3d;
+    --mainColor: #84126d;
+    --secondColor: #00f2ff;
+    --thirdColor: #ff6732;
+    --yellowColor: #ffca00;
     --darkBg: #1e1e1e;
-    --error: red
+     --error: red
 }
 
 

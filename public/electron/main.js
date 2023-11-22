@@ -178,16 +178,18 @@ app.whenReady().then(() => {
 
   ipcMain.handle('exportPresentation', async (event, id) => {
     const folderPath = path.join(__dirname, `../../${id}`);
-
+    console.log('111111111111111111111111');
     await fs.copy(
       path.join(__dirname, `../presentationsDirectory/${id}`),
       path.join(__dirname, '../..', `${id}`)
     );
+    console.log('1111111111111111111111112');
 
     const jsonData = await fs.readFileSync(
       `${path.join(__dirname)}/../db.json`,
       'utf-8'
     );
+    console.log('1111111111111111111111113');
 
     const data = JSON.parse(jsonData);
 
@@ -196,6 +198,7 @@ app.whenReady().then(() => {
       JSON.stringify(data.presentations[id]),
       'utf-8'
     );
+    console.log('1111111111111111111111114');
 
     compressFolder(folderPath)
       .then(() => {

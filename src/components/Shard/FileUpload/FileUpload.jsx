@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileUpload = ({ text, name, change, formik }) => {
+const FileUpload = ({ text, name, change, formik, className }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [fileText, setFileText] = useState(text);
 
@@ -19,7 +19,7 @@ const FileUpload = ({ text, name, change, formik }) => {
 
     const files = e.dataTransfer.files;
     handleFiles(files);
-    formik.setFieldValue('file', files[0]);
+    formik.setFieldValue(name, files[0]);
     setFileText(files[0]?.name);
   };
 
@@ -39,22 +39,19 @@ const FileUpload = ({ text, name, change, formik }) => {
 
   return (
     <label
-      htmlFor="file-input"
+      htmlFor={name}
       className={`text-secondColor   w-full h-40 border-2 border-dashed rounded-md text-center flex items-center justify-center cursor-pointer ${
         isDragOver ? 'bg-blue-100 border-blue-500' : ''
-      }`}
+      } ${className}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      {/* <label
-        className="text-secondColor w-full h-full flex justify-center items-center"
-      > */}
       <span>{isDragOver ? 'Drop the file here' : fileText}</span>
       <input
         type="file"
         name={name}
-        id="file-input"
+        id={name}
         className="hidden"
         onChange={handleFileChange}
       />
@@ -63,7 +60,6 @@ const FileUpload = ({ text, name, change, formik }) => {
           <div className="p-2 text-error text-sm">{formik.errors.file}</div>
         )}
       </div>
-      {/* </label> */}
     </label>
   );
 };

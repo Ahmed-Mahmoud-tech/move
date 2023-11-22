@@ -12,6 +12,7 @@ module.exports = {
         darkBg: 'var(--darkBg)',
         error: 'var(--error)',
         darkBlueColor: 'var(--darkBlueColor)',
+        yellowColor: 'var(--yellowColor)',
       },
     },
   },
