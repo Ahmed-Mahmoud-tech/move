@@ -26,16 +26,6 @@ export default function SelectPresentation() {
   return (
     <div className="w-[40%] min-w-[340px] mx-auto">
       <h2 className="text-2xl font-semibold text-yellowColor">Library</h2>
-      <div className="search relative  my-2">
-        <FaMagnifyingGlass className="absolute top-3 left-3" />
-
-        <input
-          type="text"
-          name=""
-          id=""
-          className="w-full p-2 pl-9 bg-blackColor border border-whiteColor rounded-lg overflow-hidden"
-        />
-      </div>
 
       <div className="mb-4">
         {list?.presentations && (

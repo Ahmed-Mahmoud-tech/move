@@ -56,8 +56,8 @@ const FileUpload = ({ text, name, change, formik, className }) => {
         onChange={handleFileChange}
       />
       <div>
-        {formik.touched.file && formik.errors.file && (
-          <div className="p-2 text-error text-sm">{formik.errors.file}</div>
+        {formik.touched[name] && formik.errors[name] && (
+          <div className="p-2 text-error text-sm">{formik.errors[name]}</div>
         )}
       </div>
     </label>

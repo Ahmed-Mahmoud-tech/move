@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from './PresentationCarousel.styled';
 import Button from '../Button/Button';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 const PresentationCarousel = ({
-  presentations,
+  presentations: sourcePresentation,
   deletePre,
   exportPresentation,
 }) => {
   const [sectionCount, setSectionCount] = useState(3);
+  const [presentations, setPresentations] = useState(sourcePresentation);
   const presentationsCount = Math.ceil(presentations.length / sectionCount);
 
   useEffect(() => {
@@ -91,8 +93,31 @@ const PresentationCarousel = ({
     );
   };
 
+  /*************************** */
+
+  const filterByName = (value) => {
+    const lowercasedValue = value.toLowerCase();
+    return sourcePresentation.filter((item) =>
+      item.name.toLowerCase().includes(lowercasedValue)
+    );
+  };
+
+  /******************************* */
+
   return (
     <Wrapper>
+      <div className="search relative  my-2">
+        <FaMagnifyingGlass className="absolute top-3 left-3" />
+
+        <input
+          type="text"
+          name=""
+          id=""
+          className="w-full p-2 pl-9 bg-blackColor border border-whiteColor rounded-lg overflow-hidden"
+          onChange={(e) => setPresentations(filterByName(e.target.value))}
+        />
+      </div>
+
       <div className="carousel">
         <div
           className="carousel-wrapper"

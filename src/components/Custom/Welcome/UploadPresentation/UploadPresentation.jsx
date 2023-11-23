@@ -9,11 +9,9 @@ function UploadPresentation() {
   const validationSchema = Yup.object().shape({
     zipFile: Yup.mixed()
       .required('File is required')
-      .test(
-        'fileType',
-        'Only ZIP files are allowed',
-        (value) => value && value.type.includes('zip')
-      )
+      .test('fileType', 'Only ZIP files are allowed', (value) => {
+        return value && value.type.includes('zip');
+      })
       .test(
         'fileSize',
         'File size must be less than 5MB',
@@ -38,7 +36,7 @@ function UploadPresentation() {
     onSubmit: async (values) => {
       const filePath = values.zipFile.path;
       const fileName = values.zipFile.name;
-
+      console.log('888888888888888');
       uploadPre(fileName, filePath);
       // const filePath = values.file.path;
       // const fileName = values.file.name;
@@ -65,7 +63,6 @@ function UploadPresentation() {
           // name="Drag and drop exported book or click to select one"
           className={'h-[5rem]'}
           change={(event) => {
-            console.log('999999999999999');
             uploadFormik.setFieldValue('zipFile', event.currentTarget.files[0]);
           }}
           formik={uploadFormik}
